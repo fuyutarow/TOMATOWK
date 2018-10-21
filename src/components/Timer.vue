@@ -27,16 +27,18 @@ import {
   Component,
   Vue,
 } from 'vue-property-decorator';
+
+
 @Component({
   components: {},
 })
 export default class Timer extends Vue {
-  public clock = {
-    min: 59,
-    sec: 59,
-  };
   public freeze = true;
   public timerObj: any = null;
+
+  get clock() {
+    return this.$store.state.timer;
+  }
   get formatTime() {
     return [
         this.clock.min,
@@ -46,20 +48,10 @@ export default class Timer extends Vue {
       .map((str) => (str.length < 2) ? '0' + str : str)
       .join(':');
   }
-  public count() {
-    if (this.clock.sec <= 0 && this.clock.min >= 1) {
-      this.clock.min--;
-      this.clock.sec = 59;
-    } else if (this.clock.sec <= 0 && this.clock.min <= 0) {
-      this.complete();
-    } else {
-      this.clock.sec--;
-    }
-  }
   public start() {
     const self = this;
     this.timerObj = setInterval(() => {
-      self.count();
+      this.$store.dispatch('timer/count');
     }, 1000);
     this.freeze = false;
   }
