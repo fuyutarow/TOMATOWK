@@ -3,6 +3,7 @@ import {Module} from 'vuex';
 
 
 const state =  {
+  pomodoro: 0,
   min: 25,
   sec: 0,
 };
@@ -20,6 +21,9 @@ const mutations = {
       _state.sec = 59;
     } else if (_state.sec <= 0 && _state.min <= 0) {
       clearInterval(_state.timerObj);
+      _state.pomodoro++;
+      _state.min = 24;
+      _state.sec = 59;
     } else {
       _state.sec--;
     }

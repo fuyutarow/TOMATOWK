@@ -3,7 +3,7 @@
     <v-navigation-drawer app></v-navigation-drawer>
     <v-toolbar app>
       <v-toolbar-side-icon></v-toolbar-side-icon>
-      <v-toolbar-title>Title</v-toolbar-title>
+      <v-toolbar-title>TOMATOWK</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn :to="{ name: 'home' }" flat>

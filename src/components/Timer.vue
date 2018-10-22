@@ -18,6 +18,11 @@
           </v-btn>
         </template>
       </v-flex>
+      <v-flex xs12>
+        <h1>
+          pomodoro: {{ clock.pomodoro }}
+        </h1>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
