@@ -20,6 +20,9 @@
             <v-icon class="material-icons">pause</v-icon>
           </v-btn>
         </template>
+        <v-btn fab dark to="/note">
+          <v-icon class="material-icons">create</v-icon>
+        </v-btn>
       </v-flex>
     </v-layout>
   </v-container>
