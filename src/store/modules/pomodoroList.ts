@@ -13,7 +13,7 @@ const actions = {
     commit('pushPomodoro', pomodoro);
     commit('dump');
   },
-  dump({ commit }){
+  dump({ commit }) {
     commit('dump');
   },
   pop({ commit }, pomodoro) {

@@ -30,7 +30,7 @@ export default class Note extends Vue {
       .filter((a) => a.color === 'red')
       .reduceRight((a) => a);
   }
-  updated() {
+  public updated() {
     this.$store.dispatch('pomodoroList/dump');
 
   }

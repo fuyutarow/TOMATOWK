@@ -10,6 +10,9 @@
       <v-btn :to="{ name: 'about' }" icon>
         <v-icon size=30>apps</v-icon>
       </v-btn>
+      <v-btn :to="{ name: 'pomodoroList' }" icon>
+        <v-icon size=30>view_list</v-icon>
+      </v-btn>
       <v-btn icon>
         <v-avatar size=30>
           <template v-if="user">
