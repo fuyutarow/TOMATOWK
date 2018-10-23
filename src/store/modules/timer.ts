@@ -1,10 +1,14 @@
+import moment from 'moment';
 import Vue from 'vue';
 import {Module} from 'vuex';
 
 
+
+const initMin = 1;
+
 const state =  {
-  pomodoro: 0,
-  min: 25,
+  pomodoroTable: [],
+  min: initMin,
   sec: 0,
 };
 
@@ -21,8 +25,14 @@ const mutations = {
       _state.sec = 59;
     } else if (_state.sec <= 0 && _state.min <= 0) {
       clearInterval(_state.timerObj);
-      _state.pomodoro++;
-      _state.min = 24;
+      const now = moment().unix();
+      const pomodoro = {
+        timestamp: now,
+        message: '',
+        color: 'red',
+      };
+      _state.pomodoroTable.push(pomodoro);
+      _state.min = initMin - 1;
       _state.sec = 59;
     } else {
       _state.sec--;

@@ -20,7 +20,7 @@
       </v-flex>
       <v-flex xs12>
         <h1>
-          pomodoro: {{ clock.pomodoro }}
+          {{ clock.pomodoroTable }}
         </h1>
       </v-flex>
     </v-layout>
