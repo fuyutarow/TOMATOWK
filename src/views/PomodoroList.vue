@@ -1,7 +1,7 @@
 <template>
   <v-data-table :headers="headers" :items="pomodoros" :pagination.sync="pagination" hide-actions class="elevation-1">
     <template slot="items" slot-scope="props">
-      <router-link tag="tr" :to="{ name: 'note'}">
+      <router-link tag="tr" :to="{ name: 'pomodoroDetail', params: { timestamp: props.item.timestamp}}">
         <td>
           {{ props.item.timestamp }}
           <Pomodot :color="props.item.color" :blank="props.item.blank" />
