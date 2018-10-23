@@ -1,11 +1,13 @@
 <template>
   <v-data-table :headers="headers" :items="pomodoros" :pagination.sync="pagination" hide-actions class="elevation-1">
     <template slot="items" slot-scope="props">
-      <td>{{ props.item.timestamp }}</td>
-      <td class="text-xs-right">
-        <Pomodot :color="props.item.color" :blank="props.item.blank" />
-      </td>
-      <td class="text-xs-right">{{ props.item.message }}</td>
+      <router-link tag="tr" :to="{ name: 'note'}">
+        <td>
+          {{ props.item.timestamp }}
+          <Pomodot :color="props.item.color" :blank="props.item.blank" />
+        </td>
+        <td class="text-xs-left">{{ props.item.message }}</td>
+      </router-link>
     </template>
   </v-data-table>
 </template>
@@ -39,10 +41,6 @@ export default class PomodoroList extends Vue {
     return [{
         text: 'timestamp',
         value: 'timestamp',
-      },
-      {
-        text: 'Color',
-        value: 'color',
       },
       {
         text: 'message',
