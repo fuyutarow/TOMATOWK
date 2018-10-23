@@ -43,16 +43,25 @@ export default class Timer extends Vue {
     this.freeze = true;
   }
   public stop() {
-    this.$store.dispatch('pomodoroList/pop');
-    this.$store.dispatch('pomodoroList/push', {color: 'white'});
+    this.freeze = true;
+    this.$store.dispatch('timer/clearTimerObj');
     this.$store.dispatch('timer/setTimer', {
       mm: 0,
       ss: 10,
     });
+
+    const popPomodoro = this.$store.state.pomodoroList.all.pop();
+    if (popPomodoro.color === 'red' && popPomodoro.blank) {
+      this.$store.dispatch('pomodoroList/push', {color: 'yellow'});
+      this.$store.dispatch('pomodoroList/push', {color: 'white'});
+    } else if (popPomodoro.color === 'red') {
+      this.$store.dispatch('pomodoroList/push', popPomodoro);
+      this.$store.dispatch('pomodoroList/push', {color: 'white'});
+    } else {
+      this.$store.dispatch('pomodoroList/push', {color: 'white'});
+    }
     this.$store.dispatch('timer/resetSeries');
-    this.freeze = true;
     this.tobe = 'takeShortRest';
-    this.$store.dispatch('pomodoroList/push', {color: 'white'});
   }
   public _routine() {
     if (!this.timer.isCountUp) {
