@@ -5,11 +5,7 @@
     <v-content>
       <v-btn @click='dump'>dump</v-btn>
       <v-btn @click='read'>read</v-btn>
-      <div style="padding:50px;flex-flow: row wrap;">
-        <template v-for="pomodoro in pomodoros">
-          <Pomodot :color="pomodoro.color" />
-        </template>
-      </div>
+      <TablePomodoro :pomodoros="pomodoros" />
       <v-container fluid>
         <router-view></router-view>
       </v-container>
@@ -25,16 +21,15 @@ import {
   Component,
   Vue,
 } from 'vue-property-decorator';
-import Pomodot from '@/components/pomodot.vue';
+import TablePomodoro from '@/components/TablePomodoro.vue';
 import {
   Header,
 } from '@/views';
 
-
 @Component({
   components: {
     Header,
-    Pomodot,
+    TablePomodoro,
   },
 })
 export default class App extends Vue {
@@ -44,6 +39,7 @@ export default class App extends Vue {
   public created() {
     const table = this.readTable();
     this.$store.state.timer.pomodoroTable = table;
+    console.log(table)
   }
   public dump() {
     const table = this.$store.state.timer.pomodoroTable;
