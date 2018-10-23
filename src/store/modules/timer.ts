@@ -10,15 +10,41 @@ const state =  {
   pomodoroTable: [],
   min: initMin,
   sec: 0,
+  isRest: false,
+  nSeries: 0,
 };
 
 const actions = {
   count({ commit }) {
     commit('count');
   },
+  incrementSeries({ commit }) {
+    commit('incrementSeries');
+  },
+  setTimer({ commit }, min) {
+    console.log('setTimer')
+    commit('setTimer', min);
+  },
+  setIsRest({ commit }, TF) {
+    console.log('setIsRest')
+    commit('setIsRest', TF);
+  },
+  clock({ commit }, payload){
+
+  }
 };
 
 const mutations = {
+  setTimer(_state, min) {
+    _state.min = min? min-1: initMin-1;
+    _state.sec = 59;
+  },
+  setIsRest(_state, TF) {
+    _state.isRest = TF;
+  },
+  incrementSeries(_state) {
+    _state.nSeries++;
+  },
   count(_state) {
     if (_state.sec <= 0 && _state.min >= 1) {
       _state.min--;

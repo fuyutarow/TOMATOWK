@@ -23,6 +23,7 @@
 </template>
 
 <script lang='ts'>
+import moment from 'moment';
 import {
   Component,
   Vue,
@@ -36,13 +37,13 @@ export default class Timer extends Vue {
   public freeze = true;
   public timerObj: any = null;
 
-  get clock() {
+  get timer() {
     return this.$store.state.timer;
   }
   get formatTime() {
     return [
-        this.clock.min,
-        this.clock.sec,
+        this.timer.min,
+        this.timer.sec,
       ]
       .map((v) => v.toString())
       .map((str) => (str.length < 2) ? '0' + str : str)
@@ -51,7 +52,7 @@ export default class Timer extends Vue {
   public start() {
     const self = this;
     this.timerObj = setInterval(() => {
-      this.$store.dispatch('timer/count');
+      this.count()
     }, 1000);
     this.freeze = false;
   }
@@ -61,6 +62,25 @@ export default class Timer extends Vue {
   }
   public complete() {
     clearInterval(this.timerObj);
+  }
+  public count() {
+    const initMin = 1;
+    const _state = this.timer;
+    if (_state.sec <= 0 && _state.min >= 1) {
+      _state.min--;
+      _state.sec = 59;
+    } else if (_state.sec <= 0 && _state.min <= 0) {
+      clearInterval(_state.timerObj);
+      const pomodoro = {
+        timestamp: moment().unix(),
+        message: '',
+        color: 'red',
+      };
+      _state.pomodoroTable.push(pomodoro);
+      this.$store.dispatch('timer/setTimer')
+    } else {
+      _state.sec--;
+    }
   }
 }
 </script>
