@@ -7,10 +7,9 @@ import {
   Vue,
   Prop,
 } from 'vue-property-decorator';
-@Component({
-})
+@Component({})
 export default class Pomodoro extends Vue {
-  @Prop() public color: string = '';
+  @Prop() public color;
   get style() {
     const colorCode =
       (this.color === 'red') ? '#ff2b00' :
