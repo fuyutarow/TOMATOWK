@@ -8,7 +8,9 @@ export default new Vuex.Store({
   modules: {
     timer,
   },
-  state: {},
+  state: {
+    currentUser: null,
+  },
   mutations: {},
   actions: {},
 });
