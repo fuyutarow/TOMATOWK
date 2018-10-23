@@ -5,10 +5,9 @@
     <v-content>
       <v-btn @click='dump'>dump</v-btn>
       <v-btn @click='read'>read</v-btn>
-      <TablePomodoro :pomodoros="pomodoros" />
       <v-container fluid>
         <router-view></router-view>
-        {{ pomodoros}}
+        <TablePomodoro :pomodoros="pomodoros" />
       </v-container>
     </v-content>
     <v-footer app></v-footer>

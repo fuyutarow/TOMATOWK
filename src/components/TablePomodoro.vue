@@ -1,7 +1,12 @@
 <template>
   <div style="padding:50px;flex-flow: row wrap;">
     <template v-for="pomodoro in pomodoros">
-      <Pomodot :color="pomodoro.color" :blank="pomodoro.blank" />
+      <template v-if="pomodoro.color==='white'">
+        <br />
+      </template>
+      <template v-else>
+        <Pomodot :color="pomodoro.color" :blank="pomodoro.blank" />
+      </template>
     </template>
   </div>
 </template>

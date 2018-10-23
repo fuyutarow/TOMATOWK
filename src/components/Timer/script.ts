@@ -79,6 +79,7 @@ export default class Timer extends Vue {
           this.$store.dispatch('pomodoroList/pop');
           this.$store.dispatch('pomodoroList/pop');
           this.$store.dispatch('pomodoroList/push', {color: 'green'});
+          this.$store.dispatch('pomodoroList/push', {color: 'white'});
           this.$store.dispatch('pomodoroList/push', {color: 'red', blank: true});
           this.tobe = 'takeShortRest';
         } else if (this.timer.nSeries < this.maxSeries - 1) {

@@ -20,7 +20,6 @@
             <v-icon class="material-icons">pause</v-icon>
           </v-btn>
         </template>
-        {{ this.tobe}}
       </v-flex>
     </v-layout>
   </v-container>

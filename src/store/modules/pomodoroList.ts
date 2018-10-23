@@ -20,6 +20,12 @@ const mutations = {
   pushPomodoro(_state, pomodoro) {
     pomodoro.timestamp = pomodoro.timestamp ? pomodoro.timestamp : moment().unix();
     pomodoro.color! = pomodoro.color;
+    if (pomodoro.color === 'white') {
+      const popPomodoro = _state.all.pop();
+      if ( popPomodoro.color !== 'white') {
+        _state.all.push(popPomodoro);
+      }
+    }
     pomodoro.message = pomodoro.message ? pomodoro.message : '';
     _state.all.push(pomodoro);
   },
