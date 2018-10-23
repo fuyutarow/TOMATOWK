@@ -36,7 +36,7 @@ export default class App extends Vue {
   get pomodoros() {
     return this.$store.state.pomodoroList.all;
   }
-  public created() {
+  public mounted() {
     const table = this.readTable();
     this.$store.state.pomodoroList.all = table;
     this.$store.dispatch('pomodoroList/push', {
