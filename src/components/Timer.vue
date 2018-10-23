@@ -73,8 +73,6 @@ export default class Timer extends Vue {
   public stop() {
     this.$store.dispatch('timer/clearTimerObj');
     this.$store.dispatch('timer/setTimer', {
-      // mm: this.focusMinutes,
-      // ss: 0,
       mm: 0,
       ss: 10,
     });
@@ -84,24 +82,33 @@ export default class Timer extends Vue {
     if (!this.timer.isCountUp) {
       this.$store.dispatch('timer/countDown');
       return;
-    } else if (this.timer.isRest) {
-      this.$store.dispatch('timer/setIsRest', false);
+    }
+
+    if (!this.timer.takeRest) {
+      // focus
+      this.$store.dispatch('timer/setTakeRest', true);
       this.$store.dispatch('timer/setTimer', {
-        // mm: this.focusMinutes,
-        // ss: 59,
         mm: 0,
         ss: 9,
       });
-    } else {
-      this.$store.dispatch('timer/setIsRest', true);
+      return;
+    } else if (this.timer.nSeries < this.maxSeries) {
+      // take short rest
+      this.$store.dispatch('timer/incrementSeries');
+      this.$store.dispatch('timer/setTakeRest', false);
       this.$store.dispatch('timer/setTimer', {
-        // mm: this.focusMinutes,
-        // ss: 59,
         mm: 0,
         ss: 4,
       });
+    } else {
+      // take long rest
+      this.$store.dispatch('timer/resetSeries');
+      this.$store.dispatch('timer/setTakeRest', false);
+      this.$store.dispatch('timer/setTimer', {
+        mm: 0,
+        ss: 7,
+      });
     }
-    this.$store.dispatch('timer/incrementSeries');
 
     const color = (this.timer.nSeries < this.maxSeries) ? 'red' : 'green';
     const pomodoro = {
@@ -110,14 +117,6 @@ export default class Timer extends Vue {
       color,
     };
     this.$store.dispatch('timer/pushPomodoroTable', pomodoro);
-
-    if (this.timer.nSeries >= 3) {
-      this.$store.dispatch('timer/resetSeries');
-    }
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -10,7 +10,7 @@ const state =  {
   pomodoroTable: [],
   min: initMin,
   sec: 0,
-  isRest: false,
+  takeRest: true,
   nSeries: 0,
   isCountUp: false,
   timerObj: null,
@@ -32,8 +32,8 @@ const actions = {
   setTimer({ commit }, mmss) {
     commit('setTimer', mmss);
   },
-  setIsRest({ commit }, TF) {
-    commit('setIsRest', TF);
+  setTakeRest({ commit }, TF) {
+    commit('setTakeRest', TF);
   },
   pushPomodoroTable({ commit }, pomodoro) {
     commit('pushPomodoroTable', pomodoro);
@@ -69,8 +69,8 @@ const mutations = {
     }
     _state.isCountUp = false;
   },
-  setIsRest(_state, TF) {
-    _state.isRest = TF;
+  setTakeRest(_state, TF) {
+    _state.takeRest = TF;
   },
   incrementSeries(_state) {
     _state.nSeries++;

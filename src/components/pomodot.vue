@@ -13,7 +13,9 @@ export default class Pomodoro extends Vue {
   @Prop() public color: string = '';
   get style() {
     const colorCode =
-      (this.color === 'red') ? '#ff2b00' : '#123456';
+      (this.color === 'red') ? '#ff2b00' :
+      (this.color === 'green') ? '#32B232' : '#123456';
+
     return `
       height: 10px;
       width: 10px;
