@@ -4,7 +4,7 @@
     <Header />
     <v-content>
       <v-btn @click='dump'>dump</v-btn>
-      <v-btn @click='read'>read</v-btn>
+      <v-btn @click='readTable'>read</v-btn>
       <v-container fluid>
         <router-view></router-view>
         <TablePomodoro :pomodoros="pomodoros" />
@@ -38,8 +38,10 @@ export default class App extends Vue {
   }
   public created() {
     const table = this.readTable();
-    this.$store.state.timer.pomodoroTable = table;
-    this.pushWhitePomodoro();
+    this.$store.state.pomodoroList.all = table;
+    this.$store.dispatch('pomodoroList/push', {
+      color: 'white',
+    });
   }
   public dump() {
     const table = this.$store.state.timer.pomodoroTable;
@@ -51,12 +53,6 @@ export default class App extends Vue {
   public readTable() {
     const json = JSON.parse(fs.readFileSync('./record.json', 'utf-8'));
     return json.table;
-  }
-  public pushWhitePomodoro() {
-    const pomodoro = {
-      color: 'white',
-    };
-    this.$store.dispatch('pomodoroList/push', pomodoro);
   }
 }
 </script>
