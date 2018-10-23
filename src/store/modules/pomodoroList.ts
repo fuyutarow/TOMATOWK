@@ -35,7 +35,7 @@ const mutations = {
         _state.all.push(popPomodoro);
       }
     }
-    pomodoro.timestamp = pomodoro.timestamp ? pomodoro.timestamp : moment().unix();
+    pomodoro.timestamp = pomodoro.timestamp ? pomodoro.timestamp : moment().format();
     pomodoro.message = pomodoro.message ? pomodoro.message : '';
     pomodoro.blank = pomodoro.blank ? pomodoro.blank : false;
     _state.all.push(pomodoro);

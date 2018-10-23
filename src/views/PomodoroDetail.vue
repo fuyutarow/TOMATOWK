@@ -10,7 +10,6 @@
 </template>
 
 <script lang='ts'>
-import moment from 'moment';
 import {
   Component,
   Vue,
@@ -18,12 +17,9 @@ import {
 
 @Component({})
 export default class Note extends Vue {
-  get moment() {
-    return moment;
-  }
   get datetime() {
     const timestamp = this.$route.params.timestamp;
-    return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+    return timestamp;
   }
   get pomodoro() {
     return this.$store.state.pomodoroList.all
