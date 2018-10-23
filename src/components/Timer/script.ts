@@ -9,9 +9,10 @@ import {
 })
 export default class Timer extends Vue {
   public freeze = true;
-  public maxSeries = 3;
-  public focusMinutes = 2;
-  public restMinutes = 1;
+  public maxSeries = 5;
+  public focusMinutes = 25;
+  public shortRestMinutes = 5;
+  public longRestMinutes = 15;
   public tobe = 'takeShortRest';
 
   get timer() {
@@ -52,8 +53,8 @@ export default class Timer extends Vue {
     this.freeze = true;
     this.$store.dispatch('timer/clearTimerObj');
     this.$store.dispatch('timer/setTimer', {
-      mm: 0,
-      ss: 10,
+      mm: this.focusMinutes,
+      ss: 0,
     });
 
     const popPomodoro = this.$store.state.pomodoroList.all.pop();
@@ -77,8 +78,8 @@ export default class Timer extends Vue {
     switch (this.tobe) {
       case 'focus':
         this.$store.dispatch('timer/setTimer', {
-          mm: 0,
-          ss: 9,
+          mm: this.focusMinutes - 1,
+          ss: 59,
         });
         this.$store.dispatch('pomodoroList/push', {color: 'red', blank: true});
         if (this.timer.nSeries === 0 ) {
@@ -96,8 +97,8 @@ export default class Timer extends Vue {
         return;
       case 'takeShortRest':
         this.$store.dispatch('timer/setTimer', {
-          mm: 0,
-          ss: 4,
+          mm: this.shortRestMinutes - 1,
+          ss: 59,
         });
         this.$store.dispatch('pomodoroList/pop');
         this.$store.dispatch('pomodoroList/push', {color: 'red'});
@@ -106,8 +107,8 @@ export default class Timer extends Vue {
       case 'takeLongRest':
         this.$store.dispatch('timer/resetSeries');
         this.$store.dispatch('timer/setTimer', {
-          mm: 0,
-          ss: 20,
+          mm: this.longRestMinutes - 1,
+          ss: 59,
         });
         this.$store.dispatch('pomodoroList/pop');
         this.$store.dispatch('pomodoroList/push', {color: 'red'});
