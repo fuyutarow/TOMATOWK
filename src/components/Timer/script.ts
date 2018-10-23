@@ -26,9 +26,6 @@ export default class Timer extends Vue {
       .map((str) => (str.length < 2) ? '0' + str : str)
       .join(':');
   }
-  public created() {
-    this.stop();
-  }
   public start() {
     const self = this;
     const timerObj = setInterval(() => {
