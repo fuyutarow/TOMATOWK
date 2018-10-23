@@ -39,6 +39,9 @@ import {
 })
 export default class Timer extends Vue {
   public freeze = true;
+  public maxSeries = 3;
+  public focusMinutes = 2;
+  public restMinutes = 1;
 
   get timer() {
     return this.$store.state.timer;
@@ -52,6 +55,9 @@ export default class Timer extends Vue {
       .map((str) => (str.length < 2) ? '0' + str : str)
       .join(':');
   }
+  public created() {
+    this.stop();
+  }
   public start() {
     const self = this;
     const timerObj = setInterval(() => {
@@ -64,19 +70,49 @@ export default class Timer extends Vue {
     this.$store.dispatch('timer/clearTimerObj');
     this.freeze = true;
   }
+  public stop() {
+    this.$store.dispatch('timer/clearTimerObj');
+    this.$store.dispatch('timer/setTimer', {
+      // mm: this.focusMinutes,
+      // ss: 0,
+      mm: 0,
+      ss: 10,
+    });
+    this.$store.dispatch('timer/resetSeries');
+  }
   public _routine() {
-    const initMin = 1;
-    if (this.timer.isCountUp) {
-      const pomodoro = {
-        timestamp: moment().unix(),
-        message: '',
-        color: 'red',
-      };
-      this.$store.dispatch('timer/pushPomodoroTable', pomodoro);
-      this.$store.dispatch('timer/setTimer');
-      this.$store.dispatch('timer/incrementSeries');
-    } else {
+    if (!this.timer.isCountUp) {
       this.$store.dispatch('timer/countDown');
+      return;
+    } else if (this.timer.isRest) {
+      this.$store.dispatch('timer/setIsRest', false);
+      this.$store.dispatch('timer/setTimer', {
+        // mm: this.focusMinutes,
+        // ss: 59,
+        mm: 0,
+        ss: 9,
+      });
+    } else {
+      this.$store.dispatch('timer/setIsRest', true);
+      this.$store.dispatch('timer/setTimer', {
+        // mm: this.focusMinutes,
+        // ss: 59,
+        mm: 0,
+        ss: 4,
+      });
+    }
+    this.$store.dispatch('timer/incrementSeries');
+
+    const color = (this.timer.nSeries < this.maxSeries) ? 'red' : 'green';
+    const pomodoro = {
+      timestamp: moment().unix(),
+      message: '',
+      color,
+    };
+    this.$store.dispatch('timer/pushPomodoroTable', pomodoro);
+
+    if (this.timer.nSeries >= 3) {
+      this.$store.dispatch('timer/resetSeries');
     }
   }
 }

@@ -29,8 +29,8 @@ const actions = {
   clearTimerObj({ commit }) {
     commit('clearTimerObj');
   },
-  setTimer({ commit }, min) {
-    commit('setTimer', min);
+  setTimer({ commit }, mmss) {
+    commit('setTimer', mmss);
   },
   setIsRest({ commit }, TF) {
     commit('setIsRest', TF);
@@ -41,22 +41,17 @@ const actions = {
   countDown({ commit }) {
     commit('countDown');
   },
+  resetSeries({ commit }) {
+    commit('resetSeries');
+  },
 };
 
 const mutations = {
-  countDown(_state) {
-    if (_state.sec <= 0 && _state.min <= 0) {
-      _state.isCountUp = true;
-    } else if (_state.sec <= 0 && _state.min >= 1) {
-      _state.min--;
-      _state.sec = 59;
-      // pass
-    } else {
-      _state.sec--;
-    }
-  },
   pushPomodoroTable(_state, pomodoro) {
     _state.pomodoroTable.push(pomodoro);
+  },
+  resetSeries(_state) {
+    _state.nSeries = 0;
   },
   setTimerObj(_state, timerObj) {
     _state.timerObj = timerObj;
@@ -64,9 +59,14 @@ const mutations = {
   clearTimerObj(_state) {
     clearInterval(_state.timerObj);
   },
-  setTimer(_state, min) {
-    _state.min = min ? min - 1 : initMin - 1;
-    _state.sec = 59;
+  setTimer(_state, mmss) {
+    if (mmss) {
+      _state.min = mmss.mm;
+      _state.sec = mmss.ss;
+    } else {
+      _state.min = initMin - 1;
+      _state.sec = 59;
+    }
     _state.isCountUp = false;
   },
   setIsRest(_state, TF) {
@@ -74,6 +74,17 @@ const mutations = {
   },
   incrementSeries(_state) {
     _state.nSeries++;
+  },
+  countDown(_state) {
+    if (_state.sec <= 0 && _state.min >= 1) {
+      _state.min--;
+      _state.sec = 59;
+    } else if (_state.sec <= 1 && _state.min <= 0) {
+      _state.isCountUp = true;
+      _state.sec--;
+    } else {
+      _state.sec--;
+    }
   },
   count(_state) {
     if (_state.sec <= 0 && _state.min >= 1) {
