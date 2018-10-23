@@ -3,7 +3,7 @@
     <template slot="items" slot-scope="props">
       <router-link tag="tr" :to="{ name: 'pomodoroDetail', params: { timestamp: props.item.timestamp}}">
         <td>
-          {{ props.item.timestamp }}
+          {{ moment(props.item.timestamp).format("YYYY-MM-DD HH:mm:ss") }}
           <Pomodot :color="props.item.color" :blank="props.item.blank" />
         </td>
         <td class="text-xs-left">{{ props.item.message }}</td>
@@ -13,11 +13,11 @@
 </template>
 
 <script lang='ts'>
+import moment from 'moment';
 import {
   Component,
   Vue,
 } from 'vue-property-decorator';
-
 import Pomodot from '@/components/Pomodot.vue';
 
 @Component({
@@ -26,6 +26,9 @@ import Pomodot from '@/components/Pomodot.vue';
   },
 })
 export default class PomodoroList extends Vue {
+  get moment() {
+    return moment;
+  }
   get pomodoros() {
     return this.$store.state.pomodoroList.all
       .filter((a) => a.color !== 'white');

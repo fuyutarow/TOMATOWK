@@ -2,8 +2,7 @@
   <v-container>
     <v-layout>
       <v-flex>
-        {{ this.$route.params.timestamp }}
-        <p>{{ pomodoro.timestamp}}</p>
+        <p>{{ datetime }}</p>
         <v-textarea solo name="input-7-4" label="commit message" v-model:value="pomodoro.message"></v-textarea>
       </v-flex>
     </v-layout row wrap>
@@ -11,22 +10,21 @@
 </template>
 
 <script lang='ts'>
-import firebase from 'firebase';
-import fs from 'fs';
+import moment from 'moment';
 import {
   Component,
   Vue,
 } from 'vue-property-decorator';
-import {
-  Header,
-} from '@/views';
 
-@Component({
-  components: {
-    Header,
-  },
-})
+@Component({})
 export default class Note extends Vue {
+  get moment() {
+    return moment;
+  }
+  get datetime() {
+    const timestamp = this.$route.params.timestamp;
+    return moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+  }
   get pomodoro() {
     return this.$store.state.pomodoroList.all
       .filter((a) => a.timestamp === this.$route.params.timestamp)[0];

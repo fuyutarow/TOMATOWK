@@ -17,6 +17,11 @@ export default class Timer extends Vue {
   get timer() {
     return this.$store.state.timer;
   }
+  get lastPomodoro() {
+    return this.$store.state.pomodoroList.all
+      .filter((a) => a.color !== 'white')
+      .reduceRight((a) => a);
+  }
   get formatTime() {
     return [
         this.timer.min,

@@ -20,7 +20,10 @@
             <v-icon class="material-icons">pause</v-icon>
           </v-btn>
         </template>
-        <v-btn fab dark to="/note">
+        <v-btn fab dark :to="{
+          name: 'pomodoroDetail',
+          params: { timestamp: lastPomodoro.timestamp},
+          }">
           <v-icon class="material-icons">create</v-icon>
         </v-btn>
       </v-flex>
