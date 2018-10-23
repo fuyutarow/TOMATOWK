@@ -1,7 +1,7 @@
 <template>
   <div style="padding:50px;flex-flow: row wrap;">
     <template v-for="pomodoro in pomodoros">
-      <Pomodot :color="pomodoro.color" />
+      <Pomodot :color="pomodoro.color" :blank="pomodoro.blank" />
     </template>
   </div>
 </template>

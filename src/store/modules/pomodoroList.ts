@@ -11,6 +11,9 @@ const actions = {
   push({ commit }, pomodoro) {
     commit('pushPomodoro', pomodoro);
   },
+  pop({ commit }, pomodoro) {
+    commit('popPomodoro', pomodoro);
+  },
 };
 
 const mutations = {
@@ -19,6 +22,9 @@ const mutations = {
     pomodoro.color! = pomodoro.color;
     pomodoro.message = pomodoro.message ? pomodoro.message : '';
     _state.all.push(pomodoro);
+  },
+  popPomodoro(_state, pomodoro) {
+    _state.all.pop();
   },
 };
 
