@@ -12,6 +12,8 @@ const state =  {
   sec: 0,
   isRest: false,
   nSeries: 0,
+  isCountUp: false,
+  timerObj: null,
 };
 
 const actions = {
@@ -21,23 +23,51 @@ const actions = {
   incrementSeries({ commit }) {
     commit('incrementSeries');
   },
+  setTimerObj({ commit }, timerObj) {
+    commit('setTimerObj', timerObj);
+  },
+  clearTimerObj({ commit }) {
+    commit('clearTimerObj');
+  },
   setTimer({ commit }, min) {
-    console.log('setTimer')
     commit('setTimer', min);
   },
   setIsRest({ commit }, TF) {
-    console.log('setIsRest')
     commit('setIsRest', TF);
   },
-  clock({ commit }, payload){
-
-  }
+  pushPomodoroTable({ commit }, pomodoro) {
+    commit('pushPomodoroTable', pomodoro);
+  },
+  countDown({ commit }) {
+    commit('countDown');
+  },
 };
 
 const mutations = {
+  countDown(_state) {
+    if (_state.sec <= 0 && _state.min <= 0) {
+      _state.isCountUp = true;
+    } else if (_state.sec <= 0 && _state.min >= 1) {
+      _state.min--;
+      _state.sec = 59;
+      // pass
+    } else {
+      _state.sec--;
+    }
+  },
+  pushPomodoroTable(_state, pomodoro) {
+    _state.pomodoroTable.push(pomodoro);
+  },
+  setTimerObj(_state, timerObj) {
+    _state.timerObj = timerObj;
+  },
+  clearTimerObj(_state) {
+    clearInterval(_state.timerObj);
+  },
   setTimer(_state, min) {
-    _state.min = min? min-1: initMin-1;
+    _state.min = min ? min - 1 : initMin - 1;
     _state.sec = 59;
+    _state.isCountUp = false;
   },
   setIsRest(_state, TF) {
     _state.isRest = TF;

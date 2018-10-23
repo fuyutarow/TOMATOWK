@@ -7,16 +7,20 @@
         </h1>
       </v-flex>
       <v-flex mb-4>
+        <v-btn @click="stop" fab dark>
+          <v-icon class="material-icons">stop</v-icon>
+        </v-btn>
         <template v-if="freeze">
           <v-btn @click="start" fab dark>
-            <i class="material-icons">play_arrow</i>
+            <v-icon class="material-icons">play_arrow</v-icon>
           </v-btn>
         </template>
         <template v-else>
-          <v-btn @click="stop" fab dark>
-            <i class="material-icons">pause</i>
+          <v-btn @click="pause" fab dark>
+            <v-icon class="material-icons">pause</v-icon>
           </v-btn>
         </template>
+        {{ timer }}
       </v-flex>
     </v-layout>
   </v-container>
@@ -35,7 +39,6 @@ import {
 })
 export default class Timer extends Vue {
   public freeze = true;
-  public timerObj: any = null;
 
   get timer() {
     return this.$store.state.timer;
@@ -51,35 +54,29 @@ export default class Timer extends Vue {
   }
   public start() {
     const self = this;
-    this.timerObj = setInterval(() => {
-      this.count()
+    const timerObj = setInterval(() => {
+      this._routine();
     }, 1000);
+    this.$store.dispatch('timer/setTimerObj', timerObj);
     this.freeze = false;
   }
-  public stop() {
-    clearInterval(this.timerObj);
+  public pause() {
+    this.$store.dispatch('timer/clearTimerObj');
     this.freeze = true;
   }
-  public complete() {
-    clearInterval(this.timerObj);
-  }
-  public count() {
+  public _routine() {
     const initMin = 1;
-    const _state = this.timer;
-    if (_state.sec <= 0 && _state.min >= 1) {
-      _state.min--;
-      _state.sec = 59;
-    } else if (_state.sec <= 0 && _state.min <= 0) {
-      clearInterval(_state.timerObj);
+    if (this.timer.isCountUp) {
       const pomodoro = {
         timestamp: moment().unix(),
         message: '',
         color: 'red',
       };
-      _state.pomodoroTable.push(pomodoro);
-      this.$store.dispatch('timer/setTimer')
+      this.$store.dispatch('timer/pushPomodoroTable', pomodoro);
+      this.$store.dispatch('timer/setTimer');
+      this.$store.dispatch('timer/incrementSeries');
     } else {
-      _state.sec--;
+      this.$store.dispatch('timer/countDown');
     }
   }
 }
