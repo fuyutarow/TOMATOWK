@@ -1,4 +1,3 @@
-import moment from 'moment';
 import {
   Component,
   Vue,
@@ -51,6 +50,7 @@ export default class Timer extends Vue {
     this.$store.dispatch('timer/resetSeries');
     this.freeze = true;
     this.tobe = 'takeShortRest';
+    this.$store.dispatch('pomodoroList/push', {color:'white'});
   }
   public _routine() {
     if (!this.timer.isCountUp) {
@@ -90,19 +90,15 @@ export default class Timer extends Vue {
 
   public pushRedPomodoro() {
     const pomodoro = {
-      timestamp: moment().unix(),
-      message: '',
       color: 'red',
     };
-    this.$store.dispatch('timer/pushPomodoroTable', pomodoro);
+    this.$store.dispatch('pomodoroList/push', pomodoro);
   }
 
   public pushGreenPomodoro() {
     const pomodoro = {
-      timestamp: moment().unix(),
-      message: '',
       color: 'green',
     };
-    this.$store.dispatch('timer/pushPomodoroTable', pomodoro);
+    this.$store.dispatch('pomodoroList/push', pomodoro);
   }
 }

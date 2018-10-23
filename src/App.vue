@@ -8,6 +8,7 @@
       <TablePomodoro :pomodoros="pomodoros" />
       <v-container fluid>
         <router-view></router-view>
+        {{ pomodoros}}
       </v-container>
     </v-content>
     <v-footer app></v-footer>
@@ -34,12 +35,12 @@ import {
 })
 export default class App extends Vue {
   get pomodoros() {
-    return this.$store.state.timer.pomodoroTable;
+    return this.$store.state.pomodoroList.all;
   }
   public created() {
     const table = this.readTable();
     this.$store.state.timer.pomodoroTable = table;
-    console.log(table)
+    this.pushWhitePomodoro();
   }
   public dump() {
     const table = this.$store.state.timer.pomodoroTable;
@@ -51,6 +52,12 @@ export default class App extends Vue {
   public readTable() {
     const json = JSON.parse(fs.readFileSync('./record.json', 'utf-8'));
     return json.table;
+  }
+  public pushWhitePomodoro() {
+    const pomodoro = {
+      color: 'white',
+    };
+    this.$store.dispatch('pomodoroList/push', pomodoro);
   }
 }
 </script>

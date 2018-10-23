@@ -7,19 +7,14 @@ import {Module} from 'vuex';
 const initMin = 1;
 
 const state =  {
-  pomodoroTable: [],
   min: initMin,
   sec: 0,
-  takeRest: true,
   nSeries: 0,
   isCountUp: false,
   timerObj: null,
 };
 
 const actions = {
-  count({ commit }) {
-    commit('count');
-  },
   incrementSeries({ commit }) {
     commit('incrementSeries');
   },
@@ -35,9 +30,6 @@ const actions = {
   setTakeRest({ commit }, TF) {
     commit('setTakeRest', TF);
   },
-  pushPomodoroTable({ commit }, pomodoro) {
-    commit('pushPomodoroTable', pomodoro);
-  },
   countDown({ commit }) {
     commit('countDown');
   },
@@ -47,9 +39,6 @@ const actions = {
 };
 
 const mutations = {
-  pushPomodoroTable(_state, pomodoro) {
-    _state.pomodoroTable.push(pomodoro);
-  },
   resetSeries(_state) {
     _state.nSeries = 0;
   },
@@ -69,9 +58,6 @@ const mutations = {
     }
     _state.isCountUp = false;
   },
-  setTakeRest(_state, TF) {
-    _state.takeRest = TF;
-  },
   incrementSeries(_state) {
     _state.nSeries++;
   },
@@ -82,25 +68,6 @@ const mutations = {
     } else if (_state.sec <= 1 && _state.min <= 0) {
       _state.isCountUp = true;
       _state.sec--;
-    } else {
-      _state.sec--;
-    }
-  },
-  count(_state) {
-    if (_state.sec <= 0 && _state.min >= 1) {
-      _state.min--;
-      _state.sec = 59;
-    } else if (_state.sec <= 0 && _state.min <= 0) {
-      clearInterval(_state.timerObj);
-      const now = moment().unix();
-      const pomodoro = {
-        timestamp: now,
-        message: '',
-        color: 'red',
-      };
-      _state.pomodoroTable.push(pomodoro);
-      _state.min = initMin - 1;
-      _state.sec = 59;
     } else {
       _state.sec--;
     }
