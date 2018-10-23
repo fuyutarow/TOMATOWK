@@ -5,7 +5,12 @@ import {Module} from 'vuex';
 
 
 const state =  {
-  all: [],
+  all: [{
+    timestamp: 0,
+    message:'',
+    color: 'white',
+    blank: true,
+  }],
 };
 
 const actions = {
@@ -24,7 +29,7 @@ const actions = {
 const mutations = {
   pushPomodoro(_state, pomodoro) {
     pomodoro.color! = pomodoro.color;
-    if (pomodoro.color === 'white') {
+    if (pomodoro.color === 'white' && _state.all.length) {
       const popPomodoro = _state.all.pop();
       if ( popPomodoro.color !== 'white') {
         _state.all.push(popPomodoro);
@@ -36,7 +41,9 @@ const mutations = {
     _state.all.push(pomodoro);
   },
   popPomodoro(_state, pomodoro) {
-    _state.all.pop();
+    if (_state.all.length) {
+      _state.all.pop();
+    }
   },
   dump(_state) {
     const json = JSON.stringify({
