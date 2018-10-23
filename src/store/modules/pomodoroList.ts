@@ -7,7 +7,7 @@ import {Module} from 'vuex';
 const state =  {
   all: [{
     timestamp: 0,
-    message:'',
+    message: '',
     color: 'white',
     blank: true,
   }],

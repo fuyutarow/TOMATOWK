@@ -20,7 +20,7 @@ export default new Router({
       component: Note,
     },
     {
-      path: '/pomodoros/:timestamp',
+      path: '/pomodoros',
       name: 'pomodoroList',
       component: PomodoroList,
     },
