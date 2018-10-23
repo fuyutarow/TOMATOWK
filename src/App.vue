@@ -21,7 +21,6 @@
 <script lang='ts'>
 import firebase from 'firebase';
 import fs from 'fs';
-import csv from 'csv';
 import {
   Component,
   Vue,
@@ -42,6 +41,10 @@ export default class App extends Vue {
   get pomodoros() {
     return this.$store.state.timer.pomodoroTable;
   }
+  public created() {
+    const table = this.readTable();
+    this.$store.state.timer.pomodoroTable = table;
+  }
   public dump() {
     const table = this.$store.state.timer.pomodoroTable;
     const json = JSON.stringify({
@@ -49,9 +52,9 @@ export default class App extends Vue {
     }, null, 4);
     fs.writeFile('./record.json', json, 'utf8', (error) => {});
   }
-  public read() {
+  public readTable() {
     const json = JSON.parse(fs.readFileSync('./record.json', 'utf-8'));
-    const table = json.table;
+    return json.table;
   }
 }
 </script>
