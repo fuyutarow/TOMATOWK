@@ -7,7 +7,7 @@ import {
   Component,
   Vue,
 } from 'vue-property-decorator';
-import Timer from '@/components/Timer/index.vue';
+import Timer from '@/components/Timer.vue';
 
 @Component({
   components: {
