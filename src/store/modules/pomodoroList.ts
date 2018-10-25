@@ -9,7 +9,6 @@ const state =  {
     timestamp: 0,
     message: '',
     color: 'white',
-    blank: true,
   }],
 };
 
