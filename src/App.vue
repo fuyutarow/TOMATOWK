@@ -4,11 +4,11 @@
     <Header />
     <v-content>
       <v-btn @click='dump'>dump</v-btn>
-      <v-btn @click='readTable'>read</v-btn>
       <v-container fluid>
         <router-view></router-view>
         <TablePomodoro :pomodoros="pomodoros" />
       </v-container>
+      {{ pomodoros }}
     </v-content>
     <v-footer app></v-footer>
   </v-app>
@@ -36,12 +36,9 @@ export default class App extends Vue {
   get pomodoros() {
     return this.$store.state.pomodoroList.all;
   }
-  public mounted() {
-    const table = this.readTable();
-    this.$store.state.pomodoroList.all = table;
-    this.$store.dispatch('pomodoroList/push', {
-      color: 'white',
-    });
+  public created() {
+    this.initTimer();
+    this.initPomodoroList();
   }
   public dump() {
     const table = this.$store.state.timer.pomodoroTable;
@@ -50,9 +47,19 @@ export default class App extends Vue {
     }, null, 4);
     fs.writeFile('./record.json', json, 'utf8', (error) => {});
   }
-  public readTable() {
+  public initPomodoroList() {
     const json = JSON.parse(fs.readFileSync('./record.json', 'utf-8'));
-    return json.table;
+    const pomodoros = json.table;
+    if (pomodoros) {
+      this.$store.dispatch('pomodoroList/load', pomodoros);
+    }
+    this.$store.dispatch('pomodoroList/push', {
+      color: 'white',
+    });
+  }
+  public initTimer() {
+    this.$store.dispatch('timer/pause');
+    this.$store.dispatch('timer/setTimer', {
       min: Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES),
       sec: Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS),
     });

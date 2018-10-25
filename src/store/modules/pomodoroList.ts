@@ -18,18 +18,22 @@ const actions = {
     commit('pushPomodoro', pomodoro);
     commit('dump');
   },
+  pop({ commit }, pomodoro) {
+    commit('popPomodoro', pomodoro);
+  },
   dump({ commit }) {
     commit('dump');
   },
-  pop({ commit }, pomodoro) {
-    commit('popPomodoro', pomodoro);
+  load({ commit }, pomodoros) {
+    commit('load', pomodoros);
   },
 };
 
 const mutations = {
   pushPomodoro(_state, pomodoro) {
     pomodoro.color! = pomodoro.color;
-    if (pomodoro.color === 'white' && _state.all.length) {
+    // if (pomodoro.color === 'white' && _state.all.length) {
+    if (pomodoro.color === 'white') {
       const popPomodoro = _state.all.pop();
       if ( popPomodoro.color !== 'white') {
         _state.all.push(popPomodoro);
@@ -50,6 +54,9 @@ const mutations = {
       table: _state.all,
     }, null, 4);
     fs.writeFile('./record.json', json, 'utf8', (error) => {});
+  },
+  load(_state, pomodoros) {
+    _state.all = pomodoros;
   },
 };
 

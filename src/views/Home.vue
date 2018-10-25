@@ -56,9 +56,11 @@ export default class Home extends Vue {
   }
   public play() {
     this.$store.dispatch('timer/play');
+    this.$store.dispatch('pomodoroList/dump');
   }
   public pause() {
     this.$store.dispatch('timer/pause');
+    this.$store.dispatch('pomodoroList/dump');
   }
   public stop() {
     this.$store.dispatch('timer/pause');
@@ -66,6 +68,7 @@ export default class Home extends Vue {
       min: Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES),
       sec: Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS),
     });
+    this.$store.dispatch('pomodoroList/dump');
   }
 }
 </script>
