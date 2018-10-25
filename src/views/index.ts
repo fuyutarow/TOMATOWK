@@ -1,10 +1,12 @@
 import Header from './Header.vue';
-import Note from './Note.vue';
+import Clock from './Clock/index.vue';
 import PomodoroList from './PomodoroList.vue';
 import PomodoroDetail from './PomodoroDetail.vue';
+import Note from './Note.vue';
 export {
   Header,
-  Note,
+  Clock,
   PomodoroList,
   PomodoroDetail,
+  Note,
 };

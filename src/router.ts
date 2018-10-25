@@ -1,7 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import { Note, PomodoroList, PomodoroDetail } from './views';
+import {
+  Clock,
+  PomodoroList,
+  PomodoroDetail,
+  Note,
+ } from './views';
 
 Vue.use(Router);
 
@@ -11,8 +15,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home,
+      name: 'clock',
+      component: Clock,
     },
     {
       path: '/note',
