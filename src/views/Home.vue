@@ -56,7 +56,7 @@ export default class Home extends Vue {
   get lastPomodoro() {
     return this.pomodoroList
       .filter((a) => a.color !== 'white')
-      .slice(-1)[0]
+      .slice(-1)[0];
   }
   get timer() {
     return this.$store.state.timer;

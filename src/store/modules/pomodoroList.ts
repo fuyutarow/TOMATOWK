@@ -28,20 +28,58 @@ const actions = {
   },
 };
 
+const padding = (pomodoro) => {
+  pomodoro.timestamp = pomodoro.timestamp ? pomodoro.timestamp : moment().format();
+  pomodoro.blank = pomodoro.blank ? pomodoro.blank : false;
+  pomodoro.message = pomodoro.message ? pomodoro.message : '';
+  pomodoro.color =
+    !pomodoro.color ? 'white' :
+    (pomodoro.color === 'white' && pomodoro.message) ? 'red' :
+    pomodoro.color;
+
+  return pomodoro;
+};
+
+const pomodoroCode = (pomodoro) =>
+      pomodoro.color === 'white' ? 'W' :
+      pomodoro.color === 'yellow' ? 'Y' :
+      pomodoro.color === 'red' ?
+        (pomodoro.blank ? 'r' : 'R') :
+      pomodoro.color === 'green' ?
+        (pomodoro.blank ? 'g' : 'G') : 'W';
+
+const haltMap = {
+    W: 'W',
+    r: 'rW',
+    R: 'RW',
+    Y: 'YW',
+    g: 'W',
+    G: 'GW',
+};
+
+const focusMap = {
+    W: 'Wr',
+    r: 'r',
+    R: 'Rr',
+    Y: 'YWr',
+    g: 'Wr',
+    G: 'GWr',
+};
+
+const fromCode = {
+    r: { color: 'red', blan: true},
+    R: { color: 'red', blan: false},
+    g: { color: 'green', blan: true},
+    G: { color: 'green', blan: false},
+    W: { color: 'white', blan: true},
+    Y: { color: 'yellow', blan: false},
+};
+
+
 const mutations = {
   pushPomodoro(_state, pomodoro) {
-    pomodoro.color! = pomodoro.color;
-    // if (pomodoro.color === 'white' && _state.all.length) {
-    if (pomodoro.color === 'white') {
-      const popPomodoro = _state.all.pop();
-      if ( popPomodoro.color !== 'white') {
-        _state.all.push(popPomodoro);
-      }
-    }
-    pomodoro.timestamp = pomodoro.timestamp ? pomodoro.timestamp : moment().format();
-    pomodoro.message = pomodoro.message ? pomodoro.message : '';
-    pomodoro.blank = pomodoro.blank ? pomodoro.blank : false;
-    _state.all.push(pomodoro);
+    const p = padding(pomodoro);
+    _state.all.push(p);
   },
   popPomodoro(_state, pomodoro) {
     if (_state.all.length) {
