@@ -53,6 +53,9 @@ export default class App extends Vue {
   public readTable() {
     const json = JSON.parse(fs.readFileSync('./record.json', 'utf-8'));
     return json.table;
+      min: Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES),
+      sec: Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS),
+    });
   }
 }
 </script>

@@ -47,8 +47,8 @@ const mutations = {
     }, 1000);
   },
   setTimer(_state, mmss) {
-    _state.min = mmss.mm;
-    _state.sec = mmss.ss;
+    _state.min = mmss.min;
+    _state.sec = mmss.sec;
   },
 };
 

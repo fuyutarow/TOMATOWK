@@ -63,8 +63,8 @@ export default class Home extends Vue {
   public stop() {
     this.$store.dispatch('timer/pause');
     this.$store.dispatch('timer/setTimer', {
-      mm: 25,
-      ss: 0,
+      min: Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES),
+      sec: Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS),
     });
   }
 }
