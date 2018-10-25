@@ -21,6 +21,10 @@ const actions = {
     commit('pushWhite');
     commit('dump');
   },
+  popWhite({ commit }) {
+    commit('popWhite');
+    commit('dump');
+  },
   // pop({ commit }, pomodoro) {
   //   commit('popPomodoro', pomodoro);
   // },
@@ -87,6 +91,12 @@ const mutations = {
       timestamp : moment().format(),
       color: 'white',
     });
+  },
+  popWhite(_state) {
+    const pop = _state.all.pop();
+    if ( pop.color !== 'white') {
+      _state.all.push(pop);
+    }
   },
   // popPomodoro(_state, pomodoro) {
   //   if (_state.all.length) {

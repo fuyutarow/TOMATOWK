@@ -74,7 +74,7 @@ export default class Home extends Vue {
   }
   get policy() {
     return !this.$store.state.pomodoroSeries.takeRest ? 'focus' :
-      this.$store.state.pomodoroSeries.count < 5 ? 'takeShortRest' : 'takeLongRest';
+      this.$store.state.pomodoroSeries.count < 5 - 1 ? 'takeShortRest' : 'takeLongRest';
   }
 
   @Watch('timeup')
@@ -83,10 +83,18 @@ export default class Home extends Vue {
       return;
     }
 
-    this.$store.dispatch('pomodoroList/lastPatch', {
-      blank: false,
-    });
-    this.$store.dispatch('pomodoroSeries/increment');
+    if (this.endPomodoro.color === 'white') {
+      this.$store.dispatch('pomodoroList/popWhite');
+      this.$store.dispatch('pomodoroList/lastPatch', {
+        blank: false,
+      });
+      this.$store.dispatch('pomodoroList/pushWhite');
+
+    } else {
+      this.$store.dispatch('pomodoroList/lastPatch', {
+        blank: false,
+      });
+    }
 
     await sleep(1);
     this.setTimer();
@@ -106,6 +114,7 @@ export default class Home extends Vue {
         this.$store.dispatch('pomodoroSeries/setTakeRest', true);
         break;
       case 'takeShortRest':
+        this.$store.dispatch('pomodoroSeries/increment');
         this.$store.dispatch('timer/setTimer', {
           min: 0,
           sec: 5,
@@ -121,7 +130,9 @@ export default class Home extends Vue {
           color: 'green',
           blank: true,
         });
+        this.$store.dispatch('pomodoroList/pushWhite');
         this.$store.dispatch('pomodoroSeries/setTakeRest', false);
+        this.$store.dispatch('pomodoroSeries/reset');
         break;
     }
     this.$store.dispatch('timer/play');
@@ -168,6 +179,7 @@ export default class Home extends Vue {
     }
     this.$store.dispatch('pomodoroList/pushWhite');
     this.$store.dispatch('pomodoroList/dump');
+    this.$store.dispatch('pomodoroSeries/reset');
   }
 }
 </script>
