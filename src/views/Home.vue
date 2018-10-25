@@ -72,6 +72,10 @@ export default class Home extends Vue {
     const timer = this.$store.state.timer;
     return timer.min <= 0 && timer.sec <= 0;
   }
+  get policy() {
+    return !this.$store.state.pomodoroSeries.takeRest ? 'focus' :
+      this.$store.state.pomodoroSeries.count < 5 ? 'takeShortRest' : 'takeLongRest';
+  }
 
   @Watch('timeup')
   public async onTimeupChange(isTimeup, oldVal) {
@@ -82,18 +86,47 @@ export default class Home extends Vue {
     this.$store.dispatch('pomodoroList/lastPatch', {
       blank: false,
     });
+    this.$store.dispatch('pomodoroSeries/increment');
 
     await sleep(1);
-    this.$store.dispatch('timer/setTimer', {
-      min: pos(Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES) - 1),
-      sec: to60(Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS) - 1),
-    });
-    this.$store.dispatch('timer/play');
-    this.$store.dispatch('pomodoroList/push', {
-      color: 'red',
-      blank: true,
-    });
+    this.setTimer();
   }
+
+  public setTimer() {
+    switch (this.policy) {
+      case 'focus':
+        this.$store.dispatch('timer/setTimer', {
+          min: pos(Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES) - 1),
+          sec: to60(Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS) - 1),
+        });
+        this.$store.dispatch('pomodoroList/push', {
+          color: 'red',
+          blank: true,
+        });
+        this.$store.dispatch('pomodoroSeries/setTakeRest', true);
+        break;
+      case 'takeShortRest':
+        this.$store.dispatch('timer/setTimer', {
+          min: 0,
+          sec: 5,
+        });
+        this.$store.dispatch('pomodoroSeries/setTakeRest', false);
+        break;
+      case 'takeLongRest':
+        this.$store.dispatch('timer/setTimer', {
+          min: 0,
+          sec: 15,
+        });
+        this.$store.dispatch('pomodoroList/push', {
+          color: 'green',
+          blank: true,
+        });
+        this.$store.dispatch('pomodoroSeries/setTakeRest', false);
+        break;
+    }
+    this.$store.dispatch('timer/play');
+  }
+
 
   public play() {
     this.$store.dispatch('timer/play');
