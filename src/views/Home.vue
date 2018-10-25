@@ -67,10 +67,16 @@ export default class Home extends Vue {
   }
   @Watch('timeup')
   public async onTimeupChange(isTimeup, oldVal) {
-    if (!isTimeup) return;
+    if (!isTimeup) {
+      return;
+    }
 
-    const sleep = sec => new Promise(r => setTimeout(r, sec * 1000))
-    await sleep(1)
+    this.$store.dispatch('pomodoroList/lastPatch', {
+      blank: false,
+    });
+
+    const sleep = (sec) => new Promise((r) => setTimeout(r, sec * 1000));
+    await sleep(1);
 
     const pos = (n) => n < 0 ? 0 : n;
     const to60 = (n) => n < 0 ? 59 : n;
@@ -79,11 +85,6 @@ export default class Home extends Vue {
       sec: to60(Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS) - 1),
     });
     this.$store.dispatch('timer/play');
-    this.$store.dispatch('pomodoroList/pop');
-    this.$store.dispatch('pomodoroList/push', {
-      color: 'red',
-      blank: false,
-    });
     this.$store.dispatch('pomodoroList/push', {
       color: 'red',
       blank: true,

@@ -17,8 +17,11 @@ const actions = {
     commit('pushPomodoro', pomodoro);
     commit('dump');
   },
-  pop({ commit }, pomodoro) {
-    commit('popPomodoro', pomodoro);
+  // pop({ commit }, pomodoro) {
+  //   commit('popPomodoro', pomodoro);
+  // },
+  lastPatch({ commit }, pomodoro) {
+    commit('lastPatch', pomodoro);
   },
   dump({ commit }) {
     commit('dump');
@@ -81,10 +84,15 @@ const mutations = {
     const p = padding(pomodoro);
     _state.all.push(p);
   },
-  popPomodoro(_state, pomodoro) {
-    if (_state.all.length) {
-      _state.all.pop();
-    }
+  // popPomodoro(_state, pomodoro) {
+  //   if (_state.all.length) {
+  //     _state.all.pop();
+  //   }
+  // },
+  lastPatch(_state, pomodoro) {
+    const pop = _state.all.pop();
+    const renew = Object.assign({},pop,pomodoro)
+    _state.all.push(renew);
   },
   dump(_state) {
     const json = JSON.stringify({
