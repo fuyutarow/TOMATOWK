@@ -4,7 +4,7 @@
     <v-toolbar-title>TOMATOWK</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn :to="{ name: 'home' }" icon>
+      <v-btn :to="{ name: 'clock' }" icon>
         <v-icon size=30>av_timer</v-icon>
       </v-btn>
       <v-btn :to="{ name: 'about' }" icon>

@@ -33,9 +33,12 @@ export default class Home extends Vue {
     const timer = this.$store.state.timer;
     return timer.min <= 0 && timer.sec <= 0;
   }
+  get pomodoroConfig() {
+    return this.$store.state.pomodoroSeries.config;
+  }
   get policy() {
     return !this.$store.state.pomodoroSeries.takeRest ? 'focus' :
-      this.$store.state.pomodoroSeries.count < 5 - 1 ? 'takeShortRest' : 'takeLongRest';
+      this.$store.state.pomodoroSeries.count < this.pomodoroConfig.maxSeries - 1 ? 'takeShortRest' : 'takeLongRest';
   }
 
   @Watch('timeup')
@@ -65,8 +68,10 @@ export default class Home extends Vue {
     switch (this.policy) {
       case 'focus':
         this.$store.dispatch('timer/setTimer', {
-          min: pos(Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES) - 1),
-          sec: to60(Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS) - 1),
+          min: 0,
+          sec: 10,
+          // min: pos(this.pomodoroConfig.focus.min - 1),
+          // sec: to60(this.pomodoroConfig.focus.sec - 1),
         });
         this.$store.dispatch('pomodoroList/push', {
           color: 'red',
@@ -79,6 +84,8 @@ export default class Home extends Vue {
         this.$store.dispatch('timer/setTimer', {
           min: 0,
           sec: 5,
+          // min: pos(this.pomodoroConfig.shortRest.min - 1),
+          // sec: to60(this.pomodoroConfig.shortRest.sec - 1),
         });
         this.$store.dispatch('pomodoroSeries/setTakeRest', false);
         break;
@@ -86,6 +93,8 @@ export default class Home extends Vue {
         this.$store.dispatch('timer/setTimer', {
           min: 0,
           sec: 15,
+          // min: pos(this.pomodoroConfig.longRest.min - 1),
+          // sec: to60(this.pomodoroConfig.longRest.sec - 1),
         });
         this.$store.dispatch('pomodoroList/push', {
           color: 'green',

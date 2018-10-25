@@ -1,10 +1,44 @@
 import Vue from 'vue';
 import {Module} from 'vuex';
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
+const  devConfig = {
+  focus: {
+    min: 0,
+    sec: 10,
+  },
+  shortRest: {
+    min: 0,
+    sec: 5,
+  },
+  LongRest: {
+    min: 0,
+    sec: 15,
+  },
+  maxSeries: 5,
+};
+
+const prodConfig = {
+  focus: {
+    min: 25,
+    sec: 0,
+  },
+  shortRest: {
+    min: 5,
+    sec: 0,
+  },
+  LongRest: {
+    min: 15,
+    sec: 0,
+  },
+  maxSeries: 5,
+};
 
 const state =  {
   count: 0,
   takeRest: true,
+  config: isDevelopment ? devConfig : prodConfig,
 };
 
 const actions = {
