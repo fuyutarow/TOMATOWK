@@ -1,12 +1,11 @@
 import moment from 'moment';
 import Vue from 'vue';
 import {Module} from 'vuex';
-
+import path from 'path';
 import { remote } from 'electron';
 
 const fs = remote.require('fs');
-const recordPath = './recordPath.json';
-
+const recordPath = path.join(remote.app.getPath('appData'), '/tomatowk/record.json');
 
 const state =  {
   all: [{

@@ -24,8 +24,12 @@
         {
             "timestamp": "2018-10-26T05:39:50+09:00",
             "message": "",
-            "blank": true,
-            "color": "red"
+            "blank": false,
+            "color": "yellow"
+        },
+        {
+            "timestamp": "2018-10-26T05:51:48+09:00",
+            "color": "white"
         }
     ]
 }
