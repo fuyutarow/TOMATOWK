@@ -40,10 +40,17 @@ export default class App extends Vue {
   get pomodoros() {
     return this.$store.state.pomodoroList.all;
   }
+  get lastPomodoro() {
+    return this.pomodoros
+      .filter((a) => a.color !== 'white')
+      .slice(-1)[0];
+  }
+
   public created() {
     this.initTimer();
     this.initPomodoroList();
   }
+
   public dump() {
     const table = this.$store.state.timer.pomodoroTable;
     const json = JSON.stringify({
@@ -51,6 +58,7 @@ export default class App extends Vue {
     }, null, 4);
     fs.writeFile(this.recordPath, json, 'utf8', (error) => {});
   }
+
   public initPomodoroList() {
     if (!fs.existsSync(this.recordPath)) {
       return;
@@ -61,8 +69,15 @@ export default class App extends Vue {
     if (pomodoros) {
       this.$store.dispatch('pomodoroList/load', pomodoros);
     }
+    if (this.lastPomodoro.color === 'red' && this.lastPomodoro.blank) {
+      this.$store.dispatch('pomodoroList/lastPatch', {
+        color: 'yellow',
+        blank: false,
+      });
+    }
     this.$store.dispatch('pomodoroList/pushWhite');
   }
+
   public initTimer() {
     this.$store.dispatch('timer/pause');
     this.$store.dispatch('timer/setTimer', {
