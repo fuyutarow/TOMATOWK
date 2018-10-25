@@ -8,7 +8,6 @@
         <router-view></router-view>
         <TablePomodoro :pomodoros="pomodoros" />
       </v-container>
-      {{ pomodoros }}
     </v-content>
     <v-footer app></v-footer>
   </v-app>

@@ -31,8 +31,6 @@
             <v-icon class="material-icons">create</v-icon>
           </v-btn>
         </template>
-        {{ this.pomodoroList.slice(-1)}}
-
       </v-flex>
     </v-layout>
   </v-container>
@@ -99,7 +97,7 @@ export default class Home extends Vue {
 
   public play() {
     this.$store.dispatch('timer/play');
-    const lastIsBlankRed =
+    const lastIsBlankRed = !this.lastPomodoro ? false :
       this.lastPomodoro.blank && this.lastPomodoro.color === 'red';
     const isWhiteEnd = this.endPomodoro.color === 'white';
     if (lastIsBlankRed && !isWhiteEnd) {
