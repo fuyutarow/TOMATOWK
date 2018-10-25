@@ -33,6 +33,10 @@ import {
   },
 })
 export default class App extends Vue {
+  get recordPath() {
+
+    return './record.json';
+  }
   get pomodoros() {
     return this.$store.state.pomodoroList.all;
   }
@@ -45,10 +49,14 @@ export default class App extends Vue {
     const json = JSON.stringify({
       table,
     }, null, 4);
-    fs.writeFile('./record.json', json, 'utf8', (error) => {});
+    fs.writeFile(this.recordPath, json, 'utf8', (error) => {});
   }
   public initPomodoroList() {
-    const json = JSON.parse(fs.readFileSync('./record.json', 'utf-8'));
+    if (!fs.existsSync(this.recordPath)) {
+      return;
+    }
+
+    const json = JSON.parse(fs.readFileSync(this.recordPath, 'utf-8'));
     const pomodoros = json.table;
     if (pomodoros) {
       this.$store.dispatch('pomodoroList/load', pomodoros);

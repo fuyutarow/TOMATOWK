@@ -91,7 +91,7 @@ const mutations = {
   // },
   lastPatch(_state, pomodoro) {
     const pop = _state.all.pop();
-    const renew = Object.assign({},pop,pomodoro)
+    const renew = Object.assign({}, pop, pomodoro);
     _state.all.push(renew);
   },
   dump(_state) {
