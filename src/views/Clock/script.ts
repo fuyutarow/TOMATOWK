@@ -5,6 +5,7 @@ import {
 } from 'vue-property-decorator';
 import Timer from '@/components/Timer.vue';
 
+
 const sleep = (sec) => new Promise((r) => setTimeout(r, sec * 1000));
 const pos = (n) => n < 0 ? 0 : n;
 const to60 = (n) => n < 0 ? 59 : n;

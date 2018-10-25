@@ -1,7 +1,11 @@
 import moment from 'moment';
-import fs from 'fs';
 import Vue from 'vue';
 import {Module} from 'vuex';
+
+import { remote } from 'electron';
+
+const fs = remote.require('fs');
+const recordPath = './recordPath.json';
 
 
 const state =  {
@@ -67,10 +71,15 @@ const mutations = {
     const json = JSON.stringify({
       table: _state.all,
     }, null, 4);
-    fs.writeFile('./record.json', json, 'utf8', (error) => {});
+    fs.writeFile(recordPath, json, 'utf8', (error) => {});
   },
-  load(_state, pomodoros) {
-    _state.all = pomodoros;
+  load(_state) {
+    if (!fs.existsSync(recordPath)) { return; }
+    const json = JSON.parse(fs.readFileSync(recordPath, 'utf-8'));
+    const pomodoros = json.table;
+    if (pomodoros) {
+      _state.all = pomodoros;
+    }
   },
 };
 

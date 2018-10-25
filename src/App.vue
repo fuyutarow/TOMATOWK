@@ -5,7 +5,6 @@
     </v-navigation-drawer>
     <Header />
     <v-content>
-      <v-btn @click='dump'>dump</v-btn>
       <v-container fluid>
         <router-view></router-view>
         <TablePomodoro :pomodoros="pomodoros" />
@@ -60,15 +59,7 @@ export default class App extends Vue {
   }
 
   public initPomodoroList() {
-    if (!fs.existsSync(this.recordPath)) {
-      return;
-    }
-
-    const json = JSON.parse(fs.readFileSync(this.recordPath, 'utf-8'));
-    const pomodoros = json.table;
-    if (pomodoros) {
-      this.$store.dispatch('pomodoroList/load', pomodoros);
-    }
+    this.$store.dispatch('pomodoroList/load');
     if (this.lastPomodoro.color === 'red' && this.lastPomodoro.blank) {
       this.$store.dispatch('pomodoroList/lastPatch', {
         color: 'yellow',
