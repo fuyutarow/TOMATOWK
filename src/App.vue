@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <v-navigation-drawer app></v-navigation-drawer>
+    <v-navigation-drawer app>
+      {{ $store.state}}
+    </v-navigation-drawer>
     <Header />
     <v-content>
       <v-btn @click='dump'>dump</v-btn>
@@ -33,7 +35,6 @@ import {
 })
 export default class App extends Vue {
   get recordPath() {
-
     return './record.json';
   }
   get pomodoros() {
@@ -60,9 +61,7 @@ export default class App extends Vue {
     if (pomodoros) {
       this.$store.dispatch('pomodoroList/load', pomodoros);
     }
-    this.$store.dispatch('pomodoroList/push', {
-      color: 'white',
-    });
+    this.$store.dispatch('pomodoroList/pushWhite');
   }
   public initTimer() {
     this.$store.dispatch('timer/pause');

@@ -166,9 +166,7 @@ export default class Home extends Vue {
         blank: false,
       });
     }
-    this.$store.dispatch('pomodoroList/push', {
-      color: 'white',
-    });
+    this.$store.dispatch('pomodoroList/pushWhite');
     this.$store.dispatch('pomodoroList/dump');
   }
 }

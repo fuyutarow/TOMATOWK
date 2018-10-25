@@ -17,6 +17,10 @@ const actions = {
     commit('pushPomodoro', pomodoro);
     commit('dump');
   },
+  pushWhite({ commit }) {
+    commit('pushWhite');
+    commit('dump');
+  },
   // pop({ commit }, pomodoro) {
   //   commit('popPomodoro', pomodoro);
   // },
@@ -31,17 +35,6 @@ const actions = {
   },
 };
 
-const padding = (pomodoro) => {
-  pomodoro.timestamp = pomodoro.timestamp ? pomodoro.timestamp : moment().format();
-  pomodoro.blank = pomodoro.blank ? pomodoro.blank : false;
-  pomodoro.message = pomodoro.message ? pomodoro.message : '';
-  pomodoro.color =
-    !pomodoro.color ? 'white' :
-    (pomodoro.color === 'white' && pomodoro.message) ? 'red' :
-    pomodoro.color;
-
-  return pomodoro;
-};
 
 const pomodoroCode = (pomodoro) =>
       pomodoro.color === 'white' ? 'W' :
@@ -81,8 +74,19 @@ const fromCode = {
 
 const mutations = {
   pushPomodoro(_state, pomodoro) {
-    const p = padding(pomodoro);
+    const p = Object.assign({}, {
+      timestamp : moment().format(),
+      message : '',
+      blank : true,
+    }, pomodoro);
     _state.all.push(p);
+  },
+  pushWhite(_state) {
+    if ( _state.all.slice(-1)[0].color === 'white') { return; }
+    _state.all.push({
+      timestamp : moment().format(),
+      color: 'white',
+    });
   },
   // popPomodoro(_state, pomodoro) {
   //   if (_state.all.length) {
