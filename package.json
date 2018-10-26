@@ -1,7 +1,11 @@
 {
-  "name": "el-tomatowk",
-  "version": "0.1.0",
-  "private": true,
+  "name": "TOMATOWK",
+  "version": "0.0.6",
+  "description": "A tool for pomodoro technique",
+  "keywords": [
+    "electron",
+    "vue"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -11,6 +15,10 @@
     "postinstall": "electron-builder install-app-deps",
     "test:unit": "vue-cli-service test:unit"
   },
+  "repository": "https://github.com/nklayman/vue-cli-plugin-electron-builder.git",
+  "author": "FUKUDA yutaro <fuyutarow@gmail.com>",
+  "license": "MIT",
+  "private": false,
   "dependencies": {
     "axios": "^0.18.0",
     "firebase": "^5.5.6",

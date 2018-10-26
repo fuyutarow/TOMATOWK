@@ -1,4 +1,6 @@
-# tomatowk
+# :tomato: TOMATOWK :rocket:
+
+> A tool for pomodoro technique
 
 ## Project setup
 ```
@@ -29,3 +31,6 @@ yarn run lint
 ```
 yarn run test:unit
 ```
+
+## License
+MIT
