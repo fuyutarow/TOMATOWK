@@ -1,6 +1,11 @@
 'use strict';
 
-import { app, protocol, BrowserWindow } from 'electron';
+import {
+  app,
+  protocol,
+  BrowserWindow,
+  Menu,
+} from 'electron';
 import {
   createProtocol,
   installVueDevtools,
@@ -61,126 +66,94 @@ app.on('ready', async () => {
   }
   createWindow()
 
-  const template = [
+
+  const template: any = [
     {
       label: 'Edit',
       submenu: [
-        {
-          label: 'Undo',
-          accelerator: 'CmdOrCtrl+Z',
-          role: 'undo'
-        },
-        {
-          label: 'Redo',
-          accelerator: 'Shift+CmdOrCtrl+Z',
-          role: 'redo'
-        },
-        {
-          type: 'separator'
-        },
-        {
-          label: 'Cut',
-          accelerator: 'CmdOrCtrl+X',
-          role: 'cut'
-        },
-        {
-          label: 'Copy',
-          accelerator: 'CmdOrCtrl+C',
-          role: 'copy'
-        },
-        {
-          label: 'Paste',
-          accelerator: 'CmdOrCtrl+V',
-          role: 'paste'
-        },
-        {
-          label: 'Select All',
-          accelerator: 'CmdOrCtrl+A',
-          role: 'selectall'
-        },
+        {role: 'undo'},
+        {role: 'redo'},
+        {type: 'separator'},
+        {role: 'cut'},
+        {role: 'copy'},
+        {role: 'paste'},
+        {role: 'pasteandmatchstyle'},
+        {role: 'delete'},
+        {role: 'selectall'}
       ]
     },
     {
       label: 'View',
       submenu: [
-        {
-          label: 'Reload',
-          accelerator: 'CmdOrCtrl+R',
-          click: function(item, focusedWindow) {
-            if (focusedWindow)
-              focusedWindow.reload();
-          }
-        },
-        {
-          label: 'Toggle Full Screen',
-          accelerator: (function() {
-            if (process.platform == 'darwin')
-              return 'Ctrl+Command+F';
-            else
-              return 'F11';
-          })(),
-          click: function(item, focusedWindow) {
-            if (focusedWindow)
-              focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
-          }
-        },
-        {
-          label: 'Toggle Developer Tools',
-          accelerator: (function() {
-            if (process.platform == 'darwin')
-              return 'Alt+Command+I';
-            else
-              return 'Ctrl+Shift+I';
-          })(),
-          click: function(item, focusedWindow) {
-            if (focusedWindow)
-              focusedWindow.webContents.toggleDevTools();
-          }
-        },
+        {role: 'reload'},
+        {role: 'forcereload'},
+        {role: 'toggledevtools'},
+        {type: 'separator'},
+        {role: 'resetzoom'},
+        {role: 'zoomin'},
+        {role: 'zoomout'},
+        {type: 'separator'},
+        {role: 'togglefullscreen'}
       ]
     },
     {
-      label: 'Window',
       role: 'window',
       submenu: [
-        {
-          label: 'Minimize',
-          accelerator: 'CmdOrCtrl+M',
-          role: 'minimize'
-        },
-        {
-          label: 'Close',
-          accelerator: 'CmdOrCtrl+W',
-          role: 'close'
-        },
+        {role: 'minimize'},
+        {role: 'close'}
       ]
     },
     {
-      label: 'Help',
       role: 'help',
       submenu: [
         {
           label: 'Learn More',
-          click: function() { require('electron').shell.openExternal('http://electron.atom.io') }
-        },
+          click () { require('electron').shell.openExternal('https://electronjs.org') }
+        }
       ]
-    },
-  ];
-
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
-
-  mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800
-  });
-
-  mainWindow.loadUrl('file://'+ __dirname +'/app/index.html');
-
-  mainWindow.on('closed', function() {
-    mainWindow = null;
-  });
-
+    }
+  ]
+  
+  if (process.platform === 'darwin') {
+    template.unshift({
+      label: app.getName(),
+      submenu: [
+        {role: 'about'},
+        {type: 'separator'},
+        {role: 'services', submenu: []},
+        {type: 'separator'},
+        {role: 'hide'},
+        {role: 'hideothers'},
+        {role: 'unhide'},
+        {type: 'separator'},
+        {role: 'quit'}
+      ]
+    })
+  
+    // Edit menu
+    template[1].submenu.push(
+      {type: 'separator'},
+      {
+        label: 'Speech',
+        submenu: [
+          {role: 'startspeaking'},
+          {role: 'stopspeaking'}
+        ]
+      }
+    )
+  
+    // Window menu
+    template[3].submenu = [
+      {role: 'close'},
+      {role: 'minimize'},
+      {role: 'zoom'},
+      {type: 'separator'},
+      {role: 'front'}
+    ]
+  }
+  
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
 });
 
 
