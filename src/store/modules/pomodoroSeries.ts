@@ -3,7 +3,7 @@ import {Module} from 'vuex';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
-const  devConfig = {
+const devConfig = {
   focus: {
     min: 0,
     sec: 10,

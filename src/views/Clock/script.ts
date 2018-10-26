@@ -42,6 +42,7 @@ export default class Home extends Vue {
       this.$store.state.pomodoroSeries.count < this.pomodoroConfig.maxSeries - 1 ? 'takeShortRest' : 'takeLongRest';
   }
 
+
   @Watch('timeup')
   public async onTimeupChange(isTimeup, oldVal) {
     if (!isTimeup) {
