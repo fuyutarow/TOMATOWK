@@ -5,6 +5,7 @@ import {
   protocol,
   BrowserWindow,
   Menu,
+  Notification,
 } from 'electron';
 import {
   createProtocol,
@@ -62,9 +63,10 @@ app.on('activate', () => {
 app.on('ready', async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
-    installVueDevtools()
+    installVueDevtools();
   }
-  createWindow()
+  createWindow();
+
 
 
   const template: any = [
@@ -79,8 +81,8 @@ app.on('ready', async () => {
         {role: 'paste'},
         {role: 'pasteandmatchstyle'},
         {role: 'delete'},
-        {role: 'selectall'}
-      ]
+        {role: 'selectall'},
+      ],
     },
     {
       label: 'View',
@@ -93,27 +95,27 @@ app.on('ready', async () => {
         {role: 'zoomin'},
         {role: 'zoomout'},
         {type: 'separator'},
-        {role: 'togglefullscreen'}
-      ]
+        {role: 'togglefullscreen'},
+      ],
     },
     {
       role: 'window',
       submenu: [
         {role: 'minimize'},
-        {role: 'close'}
-      ]
+        {role: 'close'},
+      ],
     },
     {
       role: 'help',
       submenu: [
         {
           label: 'Learn More',
-          click () { require('electron').shell.openExternal('https://electronjs.org') }
-        }
-      ]
-    }
-  ]
-  
+          click() { require('electron').shell.openExternal('https://electronjs.org'); },
+        },
+      ],
+    },
+  ];
+
   if (process.platform === 'darwin') {
     template.unshift({
       label: app.getName(),
@@ -126,10 +128,10 @@ app.on('ready', async () => {
         {role: 'hideothers'},
         {role: 'unhide'},
         {type: 'separator'},
-        {role: 'quit'}
-      ]
-    })
-  
+        {role: 'quit'},
+      ],
+    });
+
     // Edit menu
     template[1].submenu.push(
       {type: 'separator'},
@@ -137,37 +139,37 @@ app.on('ready', async () => {
         label: 'Speech',
         submenu: [
           {role: 'startspeaking'},
-          {role: 'stopspeaking'}
-        ]
-      }
-    )
-  
+          {role: 'stopspeaking'},
+        ],
+      },
+    );
+
     // Window menu
     template[3].submenu = [
       {role: 'close'},
       {role: 'minimize'},
       {role: 'zoom'},
       {type: 'separator'},
-      {role: 'front'}
-    ]
+      {role: 'front'},
+    ];
   }
-  
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 });
 
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === 'win32') {
-    process.on('message', data => {
+    process.on('message', (data) => {
       if (data === 'graceful-exit') {
-        app.quit()
+        app.quit();
       }
-    })
+    });
   } else {
     process.on('SIGTERM', () => {
-      app.quit()
-    })
+      app.quit();
+    });
   }
 }
