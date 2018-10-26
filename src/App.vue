@@ -10,7 +10,6 @@
     </v-navigation-drawer>
     <Header />
     <v-content>
-      <v-btn @click='notice'>notice</v-btn>
       <v-container fluid>
         <router-view></router-view>
         <TablePomodoro :pomodoros="pomodoros" />
@@ -33,8 +32,6 @@ import {
 import {
   recordPath,
 } from '@/store';
-import path from 'path';
-// import { Notification, } from 'electron';
 
 
 @Component({
@@ -57,24 +54,6 @@ export default class App extends Vue {
     return this.pomodoros
       .filter((a) => a.color !== 'white')
       .slice(-1)[0];
-  }
-
-  public notice(e) {
-    const options = [{
-        title: 'Basic Notification',
-        body: 'Short message part',
-      },
-      {
-        title: 'Content-Image Notification',
-        body: 'Short message plus a custom content image',
-        icon: path.join(__dirname, 'icon.png'),
-      },
-    ];
-
-    new(window as any).Notification('hweelo', {
-      title: 'Basic Notification',
-      body: 'Short message part',
-    });
   }
 
   public created() {

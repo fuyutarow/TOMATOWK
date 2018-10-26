@@ -92,6 +92,14 @@ export default class Home extends Vue {
       });
     }
 
+
+    const msg  =
+      this.policy === 'focus' ? 'Focus' :
+      this.policy === 'takeShortRest' ? 'Take short rest' :
+      'Take long rest';
+    new(window as any).Notification('timeup', {
+      body: msg,
+    });
     await sleep(1);
     this.setTimer();
   }
