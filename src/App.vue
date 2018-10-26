@@ -7,6 +7,9 @@
       <v-list>
         {{ $store.state.pomodoroSeries }}
       </v-list>
+      <v-list>
+        {{ $store.state.pomodoroList }}
+      </v-list>
     </v-navigation-drawer>
     <Header />
     <v-content>

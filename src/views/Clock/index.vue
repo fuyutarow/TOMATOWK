@@ -31,6 +31,7 @@
             <v-icon class="material-icons">create</v-icon>
           </v-btn>
         </template>
+        {{ policy }}
       </v-flex>
     </v-layout>
   </v-container>

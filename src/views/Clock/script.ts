@@ -79,6 +79,14 @@ export default class Home extends Vue {
       return;
     }
 
+    const msg  =
+      this.policy === 'focus' ? 'Focus' :
+      this.policy === 'takeShortRest' ? 'Take short rest' :
+      'Take long rest';
+    new(window as any).Notification('timeup', {
+      body: msg,
+    });
+
     if (this.endPomodoro.color === 'white') {
       this.$store.dispatch('pomodoroList/popWhite');
       this.$store.dispatch('pomodoroList/lastPatch', {
@@ -92,14 +100,6 @@ export default class Home extends Vue {
       });
     }
 
-
-    const msg  =
-      this.policy === 'focus' ? 'Focus' :
-      this.policy === 'takeShortRest' ? 'Take short rest' :
-      'Take long rest';
-    new(window as any).Notification('timeup', {
-      body: msg,
-    });
     await sleep(1);
     this.setTimer();
   }
