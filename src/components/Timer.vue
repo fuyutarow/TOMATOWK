@@ -8,6 +8,7 @@
 import {
   Component,
   Vue,
+  Prop,
 } from 'vue-property-decorator';
 
 
@@ -15,6 +16,8 @@ import {
   components: {},
 })
 export default class Timer extends Vue {
+  @Prop() public color;
+
   get timer() {
     return this.$store.state.timer;
   }
@@ -27,9 +30,23 @@ export default class Timer extends Vue {
       .map((str) => (str.length < 2) ? '0' + str : str)
       .join(':');
   }
+  get style() {
+    const colorCode =
+      (this.color === 'red') ? '#E53935' : // red darken-1
+      (this.color === 'green') ? '#32B232' :
+      (this.color === 'yellow') ? '#ffd500' : '#123456';
+    return `
+      text-align: center;
+      font-size: 100px;
+      font-weight: lighter;
+      font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+      color: ${colorCode}
+    `;
+  }
 }
 </script>
 
-<style>
+<style lang="stylus">
+$color-pack=false @import '~vuetify/src/stylus/main'
 
 </style>

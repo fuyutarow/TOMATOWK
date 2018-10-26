@@ -34,6 +34,8 @@ export default class Home extends Vue {
     const timer = this.$store.state.timer;
     return timer.min <= 0 && timer.sec <= 0;
   }
+  get color() {
+    return !this.$store.state.pomodoroSeries.takeRest ? 'green' : 'red';
   }
   get policy() {
     const config = this.$store.state.pomodoroSeries.config;
