@@ -1,10 +1,15 @@
 <template>
   <v-app>
-    <v-navigation-drawer app></v-navigation-drawer>
+    <v-navigation-drawer app>
+      <v-list>
+        {{ fpath }}
+      </v-list>
+      <v-list>
+        {{ $store.state}}
+      </v-list>
+    </v-navigation-drawer>
     <Header />
     <v-content>
-      <v-btn @click='dump'>dump</v-btn>
-      <v-btn @click='readTable'>read</v-btn>
       <v-container fluid>
         <router-view></router-view>
         <TablePomodoro :pomodoros="pomodoros" />
@@ -16,7 +21,6 @@
 
 <script lang='ts'>
 import firebase from 'firebase';
-import fs from 'fs';
 import {
   Component,
   Vue,
@@ -25,6 +29,9 @@ import TablePomodoro from '@/components/TablePomodoro.vue';
 import {
   Header,
 } from '@/views';
+import {
+  recordPath,
+} from '@/store';
 
 @Component({
   components: {
@@ -33,26 +40,43 @@ import {
   },
 })
 export default class App extends Vue {
+  get fpath() {
+    return recordPath;
+  }
+  get recordPath() {
+    return './record.json';
+  }
   get pomodoros() {
     return this.$store.state.pomodoroList.all;
   }
-  public mounted() {
-    const table = this.readTable();
-    this.$store.state.pomodoroList.all = table;
-    this.$store.dispatch('pomodoroList/push', {
-      color: 'white',
+  get lastPomodoro() {
+    return this.pomodoros
+      .filter((a) => a.color !== 'white')
+      .slice(-1)[0];
+  }
+
+  public created() {
+    this.initTimer();
+    this.initPomodoroList();
+  }
+
+  public initPomodoroList() {
+    this.$store.dispatch('pomodoroList/load');
+    if (this.lastPomodoro.color === 'red' && this.lastPomodoro.blank) {
+      this.$store.dispatch('pomodoroList/lastPatch', {
+        color: 'yellow',
+        blank: false,
+      });
+    }
+    this.$store.dispatch('pomodoroList/pushWhite');
+  }
+
+  public initTimer() {
+    this.$store.dispatch('timer/pause');
+    this.$store.dispatch('timer/setTimer', {
+      min: Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES),
+      sec: Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS),
     });
-  }
-  public dump() {
-    const table = this.$store.state.timer.pomodoroTable;
-    const json = JSON.stringify({
-      table,
-    }, null, 4);
-    fs.writeFile('./record.json', json, 'utf8', (error) => {});
-  }
-  public readTable() {
-    const json = JSON.parse(fs.readFileSync('./record.json', 'utf-8'));
-    return json.table;
   }
 }
 </script>

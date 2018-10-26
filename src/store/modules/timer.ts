@@ -3,74 +3,52 @@ import Vue from 'vue';
 import {Module} from 'vuex';
 
 
-
-const initMin = 1;
-
 const state =  {
-  min: initMin,
+  min: 0,
   sec: 0,
-  nSeries: 0,
-  isCountUp: false,
   timerObj: null,
+  inPause: true,
 };
 
 const actions = {
-  incrementSeries({ commit }) {
-    commit('incrementSeries');
+  pause({ commit }) {
+    commit('clearInterval');
+    commit('setInPause', true);
   },
-  setTimerObj({ commit }, timerObj) {
-    commit('setTimerObj', timerObj);
-  },
-  clearTimerObj({ commit }) {
-    commit('clearTimerObj');
+  play({ commit }) {
+    commit('countDown');
+    commit('setInPause', false);
   },
   setTimer({ commit }, mmss) {
     commit('setTimer', mmss);
   },
-  setTakeRest({ commit }, TF) {
-    commit('setTakeRest', TF);
-  },
-  countDown({ commit }) {
-    commit('countDown');
-  },
-  resetSeries({ commit }) {
-    commit('resetSeries');
-  },
 };
 
 const mutations = {
-  resetSeries(_state) {
-    _state.nSeries = 0;
+  clearInterval(_state) {
+    clearInterval(_state.timerObj);
   },
-  setTimerObj(_state, timerObj) {
-    _state.timerObj = timerObj;
+  setInPause(_state, TF) {
+    _state.inPause = TF;
   },
   clearTimerObj(_state) {
     clearInterval(_state.timerObj);
   },
-  setTimer(_state, mmss) {
-    if (mmss) {
-      _state.min = mmss.mm;
-      _state.sec = mmss.ss;
-    } else {
-      _state.min = initMin - 1;
-      _state.sec = 59;
-    }
-    _state.isCountUp = false;
-  },
-  incrementSeries(_state) {
-    _state.nSeries++;
-  },
   countDown(_state) {
-    if (_state.sec <= 0 && _state.min >= 1) {
-      _state.min--;
-      _state.sec = 59;
-    } else if (_state.sec <= 1 && _state.min <= 0) {
-      _state.isCountUp = true;
-      _state.sec--;
-    } else {
-      _state.sec--;
-    }
+    _state.timerObj = setInterval(() => {
+      if (_state.sec <= 0 && _state.min >= 1) {
+        _state.min--;
+        _state.sec = 59;
+      } else if (_state.sec <= 0 && _state.min <= 0) {
+        clearInterval(_state.timerObj);
+      } else {
+        _state.sec--;
+      }
+    }, 1000);
+  },
+  setTimer(_state, mmss) {
+    _state.min = mmss.min;
+    _state.sec = mmss.sec;
   },
 };
 

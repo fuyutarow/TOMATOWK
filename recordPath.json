@@ -1,0 +1,35 @@
+{
+    "table": [
+        {
+            "timestamp": 0,
+            "message": "",
+            "color": "white"
+        },
+        {
+            "timestamp": "2018-10-26T05:39:26+09:00",
+            "message": "",
+            "blank": false,
+            "color": "yellow"
+        },
+        {
+            "timestamp": "2018-10-26T05:39:29+09:00",
+            "color": "white"
+        },
+        {
+            "timestamp": "2018-10-26T05:39:30+09:00",
+            "message": "",
+            "blank": false,
+            "color": "red"
+        },
+        {
+            "timestamp": "2018-10-26T05:39:50+09:00",
+            "message": "",
+            "blank": false,
+            "color": "yellow"
+        },
+        {
+            "timestamp": "2018-10-26T05:51:48+09:00",
+            "color": "white"
+        }
+    ]
+}
