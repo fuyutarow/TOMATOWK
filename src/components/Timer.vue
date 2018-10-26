@@ -1,7 +1,7 @@
 <template>
-  <h1 style="font-size:100px">
-    {{ formatTime }}
-  </h1>
+  <div>
+    <span :style=style> {{ formatTime }} </span>
+  </div>
 </template>
 
 <script lang='ts'>
@@ -17,6 +17,7 @@ import {
 })
 export default class Timer extends Vue {
   @Prop() public color;
+  @Prop() public progress;
 
   get timer() {
     return this.$store.state.timer;
@@ -29,6 +30,9 @@ export default class Timer extends Vue {
       .map((v) => v.toString())
       .map((str) => (str.length < 2) ? '0' + str : str)
       .join(':');
+  }
+  get takeRest() {
+    return this.$store.state.pomodoroSeries.takeRest;
   }
   get style() {
     const colorCode =

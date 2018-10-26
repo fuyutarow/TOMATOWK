@@ -2,10 +2,10 @@
   <v-app>
     <v-navigation-drawer app>
       <v-list>
-        {{ fpath }}
+        {{ $store.state.config}}
       </v-list>
       <v-list>
-        {{ $store.state}}
+        {{ $store.state.pomodoroSeries }}
       </v-list>
     </v-navigation-drawer>
     <Header />

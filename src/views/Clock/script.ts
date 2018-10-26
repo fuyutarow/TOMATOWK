@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {
   Component,
   Vue,
@@ -43,6 +44,32 @@ export default class Home extends Vue {
 
     return !this.$store.state.pomodoroSeries.takeRest ? 'focus' :
       count < config.maxSeries - 1 ? 'takeShortRest' : 'takeLongRest';
+  }
+  get progress() {
+    const timer = this.$store.state.timer;
+    const config = this.$store.state.pomodoroSeries.config;
+    const a = moment.duration( {
+      minutes: timer.min,
+      seconds: timer.sec,
+    });
+    const b =
+      this.policy === 'focus' ?
+        moment.duration( {
+          minutes: config.shortRest.min,
+          seconds: config.shortRest.sec,
+        })
+      : this.policy === 'takeShortRest' ?
+        moment.duration( {
+          minutes: config.focus.min,
+          seconds: config.focus.sec,
+        })
+      :
+        moment.duration( {
+          minutes: config.longRest.min,
+          seconds: config.longRest.sec,
+        });
+    // return 100 * (1 - a / b);
+    return;
   }
 
 

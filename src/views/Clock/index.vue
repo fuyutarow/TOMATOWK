@@ -2,7 +2,7 @@
   <v-container>
     <v-layout text-xs-center wrap>
       <v-flex xs12>
-        <Timer :color='color' />
+        <Timer :color='color' :progress='progress' />
       </v-flex>
       <v-flex mb-4>
         <v-btn @click="stop" fab dark>
