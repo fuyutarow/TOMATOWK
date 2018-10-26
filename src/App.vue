@@ -2,10 +2,10 @@
   <v-app>
     <v-navigation-drawer app>
       <v-list>
-        {{ fpath }}
+        {{ $store.state.config}}
       </v-list>
       <v-list>
-        {{ $store.state}}
+        {{ $store.state.pomodoroSeries }}
       </v-list>
     </v-navigation-drawer>
     <Header />
@@ -72,10 +72,12 @@ export default class App extends Vue {
   }
 
   public initTimer() {
+    const config = this.$store.state.pomodoroSeries.config;
+
     this.$store.dispatch('timer/pause');
     this.$store.dispatch('timer/setTimer', {
-      min: Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES),
-      sec: Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS),
+      min: config.focus.min,
+      sec: config.focus.sec,
     });
   }
 }

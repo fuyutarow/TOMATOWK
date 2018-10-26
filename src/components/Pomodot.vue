@@ -13,7 +13,7 @@ export default class Pomodoro extends Vue {
   @Prop() public blank;
   get style() {
     const colorCode =
-      (this.color === 'red') ? '#ff2b00' :
+      (this.color === 'red') ? '#E53935' : // red darken-1
       (this.color === 'green') ? '#32B232' :
       (this.color === 'yellow') ? '#ffd500' : '#123456';
 

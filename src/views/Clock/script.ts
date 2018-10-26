@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {
   Component,
   Vue,
@@ -34,13 +35,43 @@ export default class Home extends Vue {
     const timer = this.$store.state.timer;
     return timer.min <= 0 && timer.sec <= 0;
   }
-  get pomodoroConfig() {
-    return this.$store.state.pomodoroSeries.config;
+  get color() {
+    return !this.$store.state.pomodoroSeries.takeRest ? 'green' : 'red';
   }
   get policy() {
+    const config = this.$store.state.pomodoroSeries.config;
+    const count = this.$store.state.pomodoroSeries.count;
+
     return !this.$store.state.pomodoroSeries.takeRest ? 'focus' :
-      this.$store.state.pomodoroSeries.count < this.pomodoroConfig.maxSeries - 1 ? 'takeShortRest' : 'takeLongRest';
+      count < config.maxSeries - 1 ? 'takeShortRest' : 'takeLongRest';
   }
+  get progress() {
+    const timer = this.$store.state.timer;
+    const config = this.$store.state.pomodoroSeries.config;
+    const a = moment.duration( {
+      minutes: timer.min,
+      seconds: timer.sec,
+    });
+    const b =
+      this.policy === 'focus' ?
+        moment.duration( {
+          minutes: config.shortRest.min,
+          seconds: config.shortRest.sec,
+        })
+      : this.policy === 'takeShortRest' ?
+        moment.duration( {
+          minutes: config.focus.min,
+          seconds: config.focus.sec,
+        })
+      :
+        moment.duration( {
+          minutes: config.longRest.min,
+          seconds: config.longRest.sec,
+        });
+    // return 100 * (1 - a / b);
+    return;
+  }
+
 
   @Watch('timeup')
   public async onTimeupChange(isTimeup, oldVal) {
@@ -66,11 +97,13 @@ export default class Home extends Vue {
   }
 
   public setTimer() {
+    const config = this.$store.state.pomodoroSeries.config;
+
     switch (this.policy) {
       case 'focus':
         this.$store.dispatch('timer/setTimer', {
-          min: pos(this.pomodoroConfig.focus.min - 1),
-          sec: to60(this.pomodoroConfig.focus.sec - 1),
+          min: pos(config.focus.min - 1),
+          sec: to60(config.focus.sec - 1),
         });
         this.$store.dispatch('pomodoroList/push', {
           color: 'red',
@@ -81,15 +114,15 @@ export default class Home extends Vue {
       case 'takeShortRest':
         this.$store.dispatch('pomodoroSeries/increment');
         this.$store.dispatch('timer/setTimer', {
-          min: pos(this.pomodoroConfig.shortRest.min - 1),
-          sec: to60(this.pomodoroConfig.shortRest.sec - 1),
+          min: pos(config.shortRest.min - 1),
+          sec: to60(config.shortRest.sec - 1),
         });
         this.$store.dispatch('pomodoroSeries/setTakeRest', false);
         break;
       case 'takeLongRest':
         this.$store.dispatch('timer/setTimer', {
-          min: pos(this.pomodoroConfig.longRest.min - 1),
-          sec: to60(this.pomodoroConfig.longRest.sec - 1),
+          min: pos(config.longRest.min - 1),
+          sec: to60(config.longRest.sec - 1),
         });
         this.$store.dispatch('pomodoroList/push', {
           color: 'green',
@@ -125,10 +158,11 @@ export default class Home extends Vue {
   }
 
   public stop() {
+    const config = this.$store.state.pomodoroSeries.config;
     this.$store.dispatch('timer/pause');
     this.$store.dispatch('timer/setTimer', {
-      min: Number(process.env.VUE_APP_DEFAULT_FOCUS_MINITUES),
-      sec: Number(process.env.VUE_APP_DEFAULT_FOCUS_SECONDS),
+      min: config.focus.min,
+      sec: config.focus.sec,
     });
     const isWhiteEnd = this.endPomodoro.color === 'white';
     if (isWhiteEnd) {
