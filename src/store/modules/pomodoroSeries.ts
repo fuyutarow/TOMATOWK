@@ -12,7 +12,7 @@ const devConfig = {
     min: 0,
     sec: 5,
   },
-  LongRest: {
+  longRest: {
     min: 0,
     sec: 15,
   },
@@ -28,7 +28,7 @@ const prodConfig = {
     min: 5,
     sec: 0,
   },
-  LongRest: {
+  longRest: {
     min: 15,
     sec: 0,
   },
