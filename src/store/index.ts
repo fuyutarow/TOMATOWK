@@ -6,6 +6,12 @@ import pomodoroSeries from './modules/pomodoroSeries';
 
 Vue.use(Vuex);
 
+
+import path from 'path';
+import { remote } from 'electron';
+const fs = remote.require('fs');
+export const recordPath = path.join(remote.app.getPath('appData'), '/tomatowk/record.json');
+
 export default new Vuex.Store({
   modules: {
     timer,

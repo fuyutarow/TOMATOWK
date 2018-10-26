@@ -1,7 +1,12 @@
 <template>
   <v-app>
     <v-navigation-drawer app>
-      {{ $store.state}}
+      <v-list>
+        {{ fpath }}
+      </v-list>
+      <v-list>
+        {{ $store.state}}
+      </v-list>
     </v-navigation-drawer>
     <Header />
     <v-content>
@@ -16,7 +21,6 @@
 
 <script lang='ts'>
 import firebase from 'firebase';
-import fs from 'fs';
 import {
   Component,
   Vue,
@@ -25,6 +29,9 @@ import TablePomodoro from '@/components/TablePomodoro.vue';
 import {
   Header,
 } from '@/views';
+import {
+  recordPath,
+} from '@/store';
 
 @Component({
   components: {
@@ -33,6 +40,9 @@ import {
   },
 })
 export default class App extends Vue {
+  get fpath() {
+    return recordPath;
+  }
   get recordPath() {
     return './record.json';
   }
@@ -48,14 +58,6 @@ export default class App extends Vue {
   public created() {
     this.initTimer();
     this.initPomodoroList();
-  }
-
-  public dump() {
-    const table = this.$store.state.timer.pomodoroTable;
-    const json = JSON.stringify({
-      table,
-    }, null, 4);
-    fs.writeFile(this.recordPath, json, 'utf8', (error) => {});
   }
 
   public initPomodoroList() {
