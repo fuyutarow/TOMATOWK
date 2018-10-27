@@ -1,6 +1,6 @@
 <template>
   <div id="editor">
-    <textarea :value="pomodoro.message" :style="style" @input='input' @keydown.tab.prevent="tabber($event)" @keydown.enter.prevent="enterer"></textarea>
+    <textarea :value="text" :style="style" @input='_input' @keydown.tab.prevent="tabber" @keydown.enter.prevent="enterer"></textarea>
   </div>
 </template>
 

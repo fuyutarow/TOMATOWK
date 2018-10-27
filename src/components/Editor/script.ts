@@ -7,19 +7,11 @@ import marked from 'marked';
 
 
 @Component
-export default class Note extends Vue {
+export default class Editor extends Vue {
+  @Prop() public value;
+  public text = '';
   public lineHeight = 20; // px
-  // @Prop() text;
-  get pomodoro() {
-    return this.$store.state.pomodoroList.all
-      .filter((a) => a.timestamp === this.$route.params.timestamp)[0];
-  }
 
-  get compiledMarkdown() {
-    return marked(this.pomodoro.message, {
-      sanitize: true,
-    });
-  }
   get style() {
     return {
       'height': `${this.height + 100}px`,
@@ -30,33 +22,25 @@ export default class Note extends Vue {
   }
   get height() {
     const autosizeHeight = (text, lineHeight) => {
-      const nLines = text.match(/\n/g).length;
-      return lineHeight * nLines;
+      const hasLn = text.match(/\n/g);
+      return hasLn ? lineHeight * hasLn.length : 0;
     };
-    return autosizeHeight(
-      this.pomodoro.message,
-      this.lineHeight,
-    );
+    return !this.text ? 0 :
+      autosizeHeight(
+        this.text,
+        this.lineHeight,
+      );
   }
 
-  public updated() {
-    this.$store.dispatch('pomodoroList/dump');
-  }
-
-  public input(e) {
-    if (!e.target.composing) {
-      this.pomodoro.message = e.target.value;
-    }
-    const text = this.pomodoro.message;
+  public created( ) {
+    this.text = this.value;
   }
 
   public enterer(event) {
     if (!event) { return; }
+    if (event.keyCode === 229) { return; } // press Enter when IME edior
 
-    // press Enter when IME edior
-    if (event.keyCode === 229) { return; }
-
-    const text = this.pomodoro.message;
+    const text = this.text;
     const cIndex = event.target.selectionStart;
     const startText = text.slice(0, cIndex);
     const endText = text.slice(cIndex);
@@ -69,20 +53,20 @@ export default class Note extends Vue {
       const li = hasLi.input.split(/(-|\*)\s/).slice(0, 2).join('');
       completion = `\n${li} `;
     }
-    this.pomodoro.message = `${startText}${completion}${endText}`;
+    this.text = `${startText}${completion}${endText}`;
 
 
     // Keep cursor position
-    event.target.value = this.pomodoro.message;
+    event.target.value = this.text;
     const newPosition = cIndex + completion.length;
     event.target.setSelectionRange(newPosition, newPosition);
   }
 
   public tabber(event) {
-    if (!event) {
-      return;
-    }
-    const text = this.pomodoro.message;
+    if (!event) { return; }
+    if (event.keyCode === 229) { return; } // press Enter when IME edior
+
+    const text = this.text;
     const cIndex = event.target.selectionStart;
     const startText = text.slice(0, cIndex);
     const endText = text.slice(cIndex);
@@ -97,14 +81,14 @@ export default class Note extends Vue {
       let completion;
       if (hasLi) {
         completion = '\n\t';
-        this.pomodoro.message = `${backText}${completion}${nowLine}${endText}`;
+        this.text = `${backText}${completion}${nowLine}${endText}`;
       } else {
         completion = '\t';
-        this.pomodoro.message = `${startText}${completion}${endText}`;
+        this.text = `${startText}${completion}${endText}`;
       }
 
       // Keep cursor position
-      event.target.value = this.pomodoro.message;
+      event.target.value = this.text;
       const newPosition = cIndex + completion.length - 1;
       event.target.setSelectionRange(newPosition, newPosition);
     } else {
@@ -116,14 +100,21 @@ export default class Note extends Vue {
 
       if (hasLi) {
         const newLine = nowLine.replace(/\s(-|\*)/, '$1');
-        this.pomodoro.message = `${backText}\n${newLine}${endText}`;
+        this.text = `${backText}\n${newLine}${endText}`;
 
         // Keep cursor position
-        event.target.value = this.pomodoro.message;
+        event.target.value = this.text;
         const newPosition = cIndex - 1;
         event.target.setSelectionRange(newPosition, newPosition);
       }
 
     }
+  }
+
+  private _input(e) {
+    if (!e.target.composing) {
+      this.text = e.target.value;
+    }
+    this.$emit('input', this.text);
   }
 }
