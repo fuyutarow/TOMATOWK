@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import {
   Clock,
   PomodoroList,
+  PomodoroLine,
   PomodoroDetail,
   Note,
  } from './views';
@@ -23,6 +24,11 @@ export default new Router({
       path: '/note',
       name: 'note',
       component: Note,
+    },
+    {
+      path: '/vine',
+      name: 'vine',
+      component: PomodoroLine,
     },
     {
       path: '/pomodoros',
