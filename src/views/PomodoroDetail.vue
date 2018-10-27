@@ -52,6 +52,7 @@ export default class Note extends Vue {
     return this.$store.state.pomodoroList.all
       .filter((a) => a.timestamp === this.$route.params.timestamp)[0];
   }
+
   public enterer(event) {
     if (!event) {
       return;
@@ -63,7 +64,7 @@ export default class Note extends Vue {
 
     // computed completion word and new text
     const nowLine = startText.split('\n').slice(-1)[0];
-    const isLi: any = nowLine.split(/\s*/)[0].match(/-|\*/);
+    const isLi: any = nowLine.match(/^\s*(-|\*)\s/);
     const completion = isLi ?
       `\n${isLi.input} ` :
       `\n`;
@@ -74,6 +75,7 @@ export default class Note extends Vue {
     const newPosition = cIndex + completion.length;
     event.target.setSelectionRange(newPosition, newPosition);
   }
+
   public tabber(event) {
     if (!event) {
       return;
@@ -85,14 +87,14 @@ export default class Note extends Vue {
 
     // computed completion word and new text
     const nowLine = startText.split('\n').slice(-1)[0];
-    const isLi: any = nowLine.split(/\s/)[0].match(/-|\*/);
+    const isLi: any = nowLine.match(/^\s*(-|\*)\s/);
     let completion;
     if (isLi) {
-      completion = '\n  '
-      const backText = startText.split('\n').slice(0, -1).join('\n')
+      completion = '\n ';
+      const backText = startText.split('\n').slice(0, -1).join('\n');
       this.pomodoro.message = `${backText}${completion}${nowLine}${endText}`;
     } else {
-      completion = '  '
+      completion = ' ';
       this.pomodoro.message = `${startText}${completion}${endText}`;
     }
 
