@@ -37,9 +37,13 @@ function createWindow() {
       win.webContents.openDevTools();
     }
   } else {
-    createProtocol('app');
     // Load the index.html when not in development
+    createProtocol('app');
+
+    win.hide();
     win.loadFile('index.html');
+    win.webContents.on('did-finish-load', ()=>{ win.show(); });
+
   }
 
   win.on('closed', () => {
@@ -67,7 +71,7 @@ app.on('activate', () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', async () => {
+app.on('ready', () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     installVueDevtools();
@@ -103,6 +107,7 @@ app.on('ready', async () => {
         {role: 'zoomout'},
         {type: 'separator'},
         {role: 'togglefullscreen'},
+        {role: 'toggleDevTools'},
       ],
     },
     {
