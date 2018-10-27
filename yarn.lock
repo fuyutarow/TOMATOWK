@@ -4801,10 +4801,10 @@ gaze@~1.1.2:
   dependencies:
     globule "^1.0.0"
 
-genfun@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/genfun/-/genfun-4.0.1.tgz#ed10041f2e4a7f1b0a38466d17a5c3e27df1dfc1"
-  integrity sha1-7RAEHy5KfxsKOEZtF6XD4n3x38E=
+genfun@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/genfun/-/genfun-5.0.0.tgz#9dd9710a06900a5c4a5bf57aca5da4e52fe76537"
+  integrity sha512-KGDOARWVga7+rnB3z9Sd2Letx515owfk0hSxHGuqjANb1M+x2bGZGqHLiozPsYMdM2OubeMni/Hpwmjq6qIUhA==
 
 gentle-fs@^2.0.0, gentle-fs@^2.0.1:
   version "2.0.1"
@@ -7114,6 +7114,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+marked@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/marked/-/marked-0.5.1.tgz#062f43b88b02ee80901e8e8d8e6a620ddb3aa752"
+  integrity sha512-iUkBZegCZou4AdwbKTwSW/lNDcz5OuRSl3qdcl31Ia0B2QPG0Jn+tKblh/9/eP9/6+4h27vpoh8wel/vQOV0vw==
+
 math-random@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/math-random/-/math-random-1.0.1.tgz#8b3aac588b8a66e4975e3cdea67f7bb329601fac"
@@ -9066,11 +9071,11 @@ protobufjs@^5.0.3:
     yargs "^3.10.0"
 
 protoduck@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/protoduck/-/protoduck-5.0.0.tgz#752145e6be0ad834cb25716f670a713c860dce70"
-  integrity sha512-agsGWD8/RZrS4ga6v82Fxb0RHIS2RZnbsSue6A9/MBRhB/jcqOANAMNrqM9900b8duj+Gx+T/JMy5IowDoO/hQ==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/protoduck/-/protoduck-5.0.1.tgz#03c3659ca18007b69a50fd82a7ebcc516261151f"
+  integrity sha512-WxoCeDCoCBY55BMvj4cAEjdVUFGRWed9ZxPlqTKYyw1nDDTQ4pqmnIMAGfJlg7Dx35uB/M+PHJPTmGOvaCaPTg==
   dependencies:
-    genfun "^4.0.1"
+    genfun "^5.0.0"
 
 proxy-addr@~2.0.4:
   version "2.0.4"
@@ -11353,10 +11358,10 @@ vue-class-component@^6.0.0, vue-class-component@^6.2.0:
   resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-6.3.2.tgz#e6037e84d1df2af3bde4f455e50ca1b9eec02be6"
   integrity sha512-cH208IoM+jgZyEf/g7mnFyofwPDJTM/QvBNhYMjqGB8fCsRyTf68rH2ISw/G20tJv+5mIThQ3upKwoL4jLTr1A==
 
-vue-cli-plugin-electron-builder@^1.0.0-rc.6:
-  version "1.0.0-rc.6"
-  resolved "https://registry.yarnpkg.com/vue-cli-plugin-electron-builder/-/vue-cli-plugin-electron-builder-1.0.0-rc.6.tgz#88866a6471771732fe420c6ee140c10785866b96"
-  integrity sha512-e76Zi4Z14M3/lffwhg6UWU/uaLn+R3OuhsVvjKOGLOM6HlwkvhXk2s6lybW2IIyvE5f8klnoD/Vnfu2OXcn5gw==
+vue-cli-plugin-electron-builder@^1.0.0-rc.7:
+  version "1.0.0-rc.7"
+  resolved "https://registry.yarnpkg.com/vue-cli-plugin-electron-builder/-/vue-cli-plugin-electron-builder-1.0.0-rc.7.tgz#9899f9dd6a2162925cd63dc095e777b26dfa1d4b"
+  integrity sha512-o4kIg7NQF0dHWNeP7Nv4jgcjktPqXEz0D9X+cQCEMpjjKIbuDTZj/DgXqFu+6BiiIE+i6N9fv3w9ajhN3S+nbA==
   dependencies:
     electron-builder "^20.28.1"
     execa "^1.0.0"
