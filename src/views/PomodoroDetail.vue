@@ -3,7 +3,8 @@
     <v-layout>
       <v-flex>
         <p> {{ datetime }} </p>
-        <Editor />
+        <Editor v-model="pomodoro.message" />
+        {{ pomodoro.message}}
       </v-flex>
     </v-layout row wrap>
   </v-container>
@@ -13,6 +14,7 @@
 import {
   Component,
   Vue,
+  Watch,
 } from 'vue-property-decorator';
 import marked from 'marked';
 import Editor from '@/components/Editor/index.vue';
@@ -24,8 +26,6 @@ import Editor from '@/components/Editor/index.vue';
   },
 })
 export default class Note extends Vue {
-  public lineHeight = 20; // px
-
   get datetime() {
     const timestamp = this.$route.params.timestamp;
     return timestamp;
@@ -40,8 +40,10 @@ export default class Note extends Vue {
     });
   }
 
-  // public updated() {
-  //   this.$store.dispatch('pomodoroList/dump');
-  // }
+  @Watch('pomodoro.message')
+  public save() {
+    this.$store.dispatch('pomodoroList/dump');
+
+  }
 }
 </script>
