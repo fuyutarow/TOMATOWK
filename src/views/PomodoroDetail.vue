@@ -63,7 +63,7 @@ export default class Note extends Vue {
 
     // computed completion word and new text
     const nowLine = startText.split('\n').slice(-1)[0];
-    const isLi: any = nowLine.split(/\s/)[0].match(/-|\*/);
+    const isLi: any = nowLine.split(/\s*/)[0].match(/-|\*/);
     const completion = isLi ?
       `\n${isLi.input} ` :
       `\n`;
@@ -84,12 +84,21 @@ export default class Note extends Vue {
     const endText = text.slice(cIndex);
 
     // computed completion word and new text
-    const completion = '\t';
-    this.pomodoro.message = `${startText}${completion}${endText}`;
+    const nowLine = startText.split('\n').slice(-1)[0];
+    const isLi: any = nowLine.split(/\s/)[0].match(/-|\*/);
+    let completion;
+    if (isLi) {
+      completion = '\n  '
+      const backText = startText.split('\n').slice(0, -1).join('\n')
+      this.pomodoro.message = `${backText}${completion}${nowLine}${endText}`;
+    } else {
+      completion = '  '
+      this.pomodoro.message = `${startText}${completion}${endText}`;
+    }
 
     // Keep cursor position
     event.target.value = this.pomodoro.message;
-    const newPosition = cIndex + completion.length;
+    const newPosition = cIndex + completion.length - 1;
     event.target.setSelectionRange(newPosition, newPosition);
   }
   get height() {
