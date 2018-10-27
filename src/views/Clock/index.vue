@@ -2,7 +2,7 @@
   <v-container align-center>
     <v-layout text-xs-center>
       <v-flex xs12>
-        <Timer :color='color' :progress='progress' />
+        <Timer :color='color' :progress='progress' style="padding:10px" />
       </v-flex>
     </v-layout>
     <v-layout text-xs-center>

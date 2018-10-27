@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container style='padding:0'>
     <v-layout>
       <v-flex>
         <p> {{ datetime }} </p>

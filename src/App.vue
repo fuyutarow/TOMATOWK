@@ -13,11 +13,10 @@
     </v-navigation-drawer>
     <Header />
     <v-content>
-      <v-container fluid>
+      <v-container fluid style="padding:0">
         <router-view></router-view>
       </v-container>
     </v-content>
-    <v-footer app></v-footer>
   </v-app>
 </template>
 

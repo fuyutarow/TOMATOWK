@@ -21,7 +21,14 @@ let win;
 protocol.registerStandardSchemes(['app'], { secure: true });
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({ width: 300, height: 300 });
+  win = new BrowserWindow({ 
+    width: 300,
+    height: 300,
+    minWidth: 300,
+    minHeight: 300,
+    resizable: true,
+    frame: true,
+  });
 
   if (isDevelopment) {
     // Load the url of the dev server if in development mode

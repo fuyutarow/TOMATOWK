@@ -1,28 +1,29 @@
 <template>
-  <v-toolbar app flat height=30>
+  <v-toolbar app flat height=35>
+    <!--
     <v-toolbar-side-icon small></v-toolbar-side-icon>
+    -->
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn :to="{ name: 'clock' }" small icon>
         <v-icon size=25>av_timer</v-icon>
       </v-btn>
-      <v-btn :to="{ name: 'about' }" small icon>
-        <v-icon size=25>apps</v-icon>
-      </v-btn>
       <v-btn :to="{ name: 'pomodoroList' }" small icon>
         <v-icon size=25>view_list</v-icon>
       </v-btn>
+      <!--
       <v-btn small icon>
         <v-avatar size=25>
           <template v-if="user">
-            <img :src="user.photoURL" />
-            </template>
-            <template v-else>
-              <img @click='_signin'
-                src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png"/>
-            </template>
+            <img :src="user.photoURL"></img>
+          </template>
+          <template v-else>
+            <img @click='_signin'
+              src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png"/>
+          </template>
         </v-avatar>
       </v-btn>
+      -->
     </v-toolbar-items>
   </v-toolbar>
 </template>
