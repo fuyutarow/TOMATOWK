@@ -24,6 +24,14 @@ import marked from 'marked';
 export default class Note extends Vue {
   public lineHeight = 20; // px
 
+  get datetime() {
+    const timestamp = this.$route.params.timestamp;
+    return timestamp;
+  }
+  get pomodoro() {
+    return this.$store.state.pomodoroList.all
+      .filter((a) => a.timestamp === this.$route.params.timestamp)[0];
+  }
   get compiledMarkdown() {
     return marked(this.pomodoro.message, {
       sanitize: true,
@@ -37,13 +45,26 @@ export default class Note extends Vue {
       'padding': '20px',
     };
   }
-  get datetime() {
-    const timestamp = this.$route.params.timestamp;
-    return timestamp;
+  get height() {
+    const autosizeHeight = (text, lineHeight) => {
+      const nLines = text.match(/\n/g).length;
+      return lineHeight * nLines;
+    };
+    return !this.pomodoro.message ? 0 :
+      autosizeHeight(
+        this.pomodoro.message,
+        this.lineHeight,
+      );
   }
-  get pomodoro() {
-    return this.$store.state.pomodoroList.all
-      .filter((a) => a.timestamp === this.$route.params.timestamp)[0];
+  public input(e) {
+    if (!e.target.composing) {
+      this.pomodoro.message = e.target.value;
+    }
+
+    const text = this.pomodoro.message;
+  }
+  public updated() {
+    this.$store.dispatch('pomodoroList/dump');
   }
 
   public enterer(event) {
@@ -125,26 +146,6 @@ export default class Note extends Vue {
       }
 
     }
-  }
-  get height() {
-    const autosizeHeight = (text, lineHeight) => {
-      const nLines = text.match(/\n/g).length;
-      return lineHeight * nLines;
-    };
-    return autosizeHeight(
-      this.pomodoro.message,
-      this.lineHeight,
-    );
-  }
-  public input(e) {
-    if (!e.target.composing) {
-      this.pomodoro.message = e.target.value;
-    }
-
-    const text = this.pomodoro.message;
-  }
-  public updated() {
-    this.$store.dispatch('pomodoroList/dump');
   }
 }
 </script>
