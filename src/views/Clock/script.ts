@@ -5,8 +5,10 @@ import {
   Vue,
   Watch,
 } from 'vue-property-decorator';
+import VueMarkdown from 'vue-markdown'
 import Timer from '@/components/Timer.vue';
 import TablePomodoro from '@/components/TablePomodoro.vue';
+
 
 
 const sleep = (sec) => new Promise((r) => setTimeout(r, sec * 1000));
@@ -17,6 +19,7 @@ const to60 = (n) => n < 0 ? 59 : n;
   components: {
     Timer,
     TablePomodoro,
+    VueMarkdown,
   },
 })
 export default class Home extends Vue {

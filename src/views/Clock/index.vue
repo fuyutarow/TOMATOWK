@@ -38,7 +38,7 @@
         <TablePomodoro :pomodoros="pomodoroList" />
       </v-flex>
       <v-flex d-flex xs8>
-        <div style="padding:50px;" v-html="compiledMarkdown"></div>
+        <VueMarkdown :source="lastPomodoro.message" style='padding:50px' />
       </v-flex>
     </v-layout>
   </v-container>
