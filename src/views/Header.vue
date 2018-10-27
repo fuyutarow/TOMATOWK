@@ -1,20 +1,19 @@
 <template>
-  <v-toolbar app>
-    <v-toolbar-side-icon></v-toolbar-side-icon>
-    <v-toolbar-title>TOMATOWK</v-toolbar-title>
+  <v-toolbar app flat height=30>
+    <v-toolbar-side-icon small></v-toolbar-side-icon>
     <v-spacer></v-spacer>
     <v-toolbar-items>
-      <v-btn :to="{ name: 'clock' }" icon>
-        <v-icon size=30>av_timer</v-icon>
+      <v-btn :to="{ name: 'clock' }" small icon>
+        <v-icon size=25>av_timer</v-icon>
       </v-btn>
-      <v-btn :to="{ name: 'about' }" icon>
-        <v-icon size=30>apps</v-icon>
+      <v-btn :to="{ name: 'about' }" small icon>
+        <v-icon size=25>apps</v-icon>
       </v-btn>
-      <v-btn :to="{ name: 'pomodoroList' }" icon>
-        <v-icon size=30>view_list</v-icon>
+      <v-btn :to="{ name: 'pomodoroList' }" small icon>
+        <v-icon size=25>view_list</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-avatar size=30>
+      <v-btn small icon>
+        <v-avatar size=25>
           <template v-if="user">
             <img :src="user.photoURL" />
             </template>
