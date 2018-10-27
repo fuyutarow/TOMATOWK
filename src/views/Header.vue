@@ -35,34 +35,34 @@ import {
   Vue,
 } from 'vue-property-decorator';
 
-@Component({})
+@Component
 export default class Header extends Vue {
-  get user() {
-    return this.$store.state.currentUser;
-  }
+  // get user() {
+  //   return this.$store.state.currentUser;
+  // }
 
-  public async created() {
-    const user = await firebase.auth().getRedirectResult().then((result) => result.user);
-    this.$store.state.currentUser! = user;
-  }
+  // public async created() {
+  //   const user = await firebase.auth().getRedirectResult().then((result) => result.user);
+  //   this.$store.state.currentUser! = user;
+  // }
 
-  private async _signin() {
-    // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+  // private async _signin() {
+  //   // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
+  //   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
 
-    const google = new firebase.auth.GoogleAuthProvider();
-    return await firebase
-      .auth()
-      .signInWithRedirect(google)
-      .then((result: any) => {
-        this.$store.state.currentUser! = result.user;
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.email;
-        const credential = error.credential;
-      });
-  }
+  //   const google = new firebase.auth.GoogleAuthProvider();
+  //   return await firebase
+  //     .auth()
+  //     .signInWithRedirect(google)
+  //     .then((result: any) => {
+  //       this.$store.state.currentUser! = result.user;
+  //     })
+  //     .catch((error) => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       const email = error.email;
+  //       const credential = error.credential;
+  //     });
+  // }
 }
 </script>
