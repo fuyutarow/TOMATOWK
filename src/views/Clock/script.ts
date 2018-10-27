@@ -5,7 +5,7 @@ import {
   Vue,
   Watch,
 } from 'vue-property-decorator';
-import VueMarkdown from 'vue-markdown'
+import VueMarkdown from 'vue-markdown';
 import Timer from '@/components/Timer.vue';
 import TablePomodoro from '@/components/TablePomodoro.vue';
 
@@ -197,5 +197,6 @@ export default class Home extends Vue {
     this.$store.dispatch('pomodoroList/pushWhite');
     this.$store.dispatch('pomodoroList/dump');
     this.$store.dispatch('pomodoroSeries/reset');
+    this.$store.dispatch('pomodoroSeries/setTakeRest', true);
   }
 }
