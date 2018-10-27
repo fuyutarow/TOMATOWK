@@ -26,7 +26,7 @@ import {
 import marked from 'marked';
 
 
-@Component({})
+@Component
 export default class Note extends Vue {
   public width = 400; // px
   public lineHeight = 20; // px
@@ -64,10 +64,12 @@ export default class Note extends Vue {
 
     // computed completion word and new text
     const nowLine = startText.split('\n').slice(-1)[0];
-    const isLi: any = nowLine.match(/^\s*(-|\*)\s/);
-    const completion = isLi ?
-      `\n${isLi.input} ` :
-      `\n`;
+    const hasLi: any = nowLine.match(/^\s*(-|\*)\s/);
+    let completion = '\n';
+    if (hasLi) {
+      const li = hasLi.input.split(/(-|\*)\s/).slice(0, 2).join('');
+      completion = `\n${li} `;
+    }
     this.pomodoro.message = `${startText}${completion}${endText}`;
 
     // Keep cursor position
@@ -87,9 +89,9 @@ export default class Note extends Vue {
 
     // computed completion word and new text
     const nowLine = startText.split('\n').slice(-1)[0];
-    const isLi: any = nowLine.match(/^\s*(-|\*)\s/);
+    const hasLi: any = nowLine.match(/^\s*(-|\*)\s/);
     let completion;
-    if (isLi) {
+    if (hasLi) {
       completion = '\n ';
       const backText = startText.split('\n').slice(0, -1).join('\n');
       this.pomodoro.message = `${backText}${completion}${nowLine}${endText}`;
