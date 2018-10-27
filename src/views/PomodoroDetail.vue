@@ -72,6 +72,7 @@ export default class Note extends Vue {
     }
     this.pomodoro.message = `${startText}${completion}${endText}`;
 
+
     // Keep cursor position
     event.target.value = this.pomodoro.message;
     const newPosition = cIndex + completion.length;
@@ -86,24 +87,45 @@ export default class Note extends Vue {
     const cIndex = event.target.selectionStart;
     const startText = text.slice(0, cIndex);
     const endText = text.slice(cIndex);
+    const backText = startText.split('\n').slice(0, -1).join('\n');
 
-    // computed completion word and new text
-    const nowLine = startText.split('\n').slice(-1)[0];
-    const hasLi: any = nowLine.match(/^\s*(-|\*)\s/);
-    let completion;
-    if (hasLi) {
-      completion = '\n ';
-      const backText = startText.split('\n').slice(0, -1).join('\n');
-      this.pomodoro.message = `${backText}${completion}${nowLine}${endText}`;
+    if (!event.shiftKey) {
+      /* press Tab to unindent */
+
+      // computed completion word and new text
+      const nowLine = startText.split('\n').slice(-1)[0];
+      const hasLi: any = nowLine.match(/^\s*(-|\*)\s/);
+      let completion;
+      if (hasLi) {
+        completion = '\n ';
+        this.pomodoro.message = `${backText}${completion}${nowLine}${endText}`;
+      } else {
+        completion = ' ';
+        this.pomodoro.message = `${startText}${completion}${endText}`;
+      }
+
+      // Keep cursor position
+      event.target.value = this.pomodoro.message;
+      const newPosition = cIndex + completion.length - 1;
+      event.target.setSelectionRange(newPosition, newPosition);
     } else {
-      completion = ' ';
-      this.pomodoro.message = `${startText}${completion}${endText}`;
-    }
+      /* press Shift+Tab to unindent */
 
-    // Keep cursor position
-    event.target.value = this.pomodoro.message;
-    const newPosition = cIndex + completion.length - 1;
-    event.target.setSelectionRange(newPosition, newPosition);
+      // computed completion word and new text
+      const nowLine = startText.split('\n').slice(-1)[0];
+      const hasLi: any = nowLine.match(/^\s*(-|\*)\s/);
+
+      if (hasLi) {
+        const newLine = nowLine.replace(/\s(-|\*)/, '$1');
+        this.pomodoro.message = `${backText}\n${newLine}${endText}`;
+
+        // Keep cursor position
+        event.target.value = this.pomodoro.message;
+        const newPosition = cIndex - 1;
+        event.target.setSelectionRange(newPosition, newPosition);
+      }
+
+    }
   }
   get height() {
     const autosizeHeight = (text, lineHeight) => {
