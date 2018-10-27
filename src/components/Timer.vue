@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <span :style=style> {{ formatTime }} </span>
-  </div>
+  <div :style=style>{{ formatTime }}</div>
 </template>
 
 <script lang='ts'>
@@ -40,10 +38,14 @@ export default class Timer extends Vue {
       (this.color === 'green') ? '#32B232' :
       (this.color === 'yellow') ? '#ffd500' : '#123456';
     return `
-      text-align: center;
-      font-size: 100px;
-      font-weight: lighter;
-      font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+			text-align:center;
+			font-feature-settings: "smcp", "zero";
+			font-size: 80px;
+			padding: 0;
+			margin: 0;
+			font-weight: 1;
+  //    font-family: Consolas, 'Courier New', Courier, Monaco, monospace;
+			font-family: 'Roboto', sans-serif;
       color: ${colorCode}
     `;
   }
@@ -52,5 +54,6 @@ export default class Timer extends Vue {
 
 <style lang="stylus">
 $color-pack=false @import '~vuetify/src/stylus/main'
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 </style>
