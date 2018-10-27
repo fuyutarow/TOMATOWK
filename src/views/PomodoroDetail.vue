@@ -7,7 +7,7 @@
           <v-textarea solo name="input-7-4" label="commit message" v-model:value="pomodoro.message"></v-textarea>
         <textarea v-model:value="pomodoro.message" :style="style" @input='input'></textarea>
         -->
-        <textarea :value="pomodoro.message" :style="style" @input='input' @keydown.tab.prevent="tabber" @keydown.enter.prevent="enterer"></textarea>
+        <textarea :value="pomodoro.message" :style="style" @input='input' @keydown.tab.prevent="tabber($event)" @keydown.enter.prevent="enterer"></textarea>
         <div v-html="compiledMarkdown"></div>
       </v-flex>
       <v-flex>
@@ -53,40 +53,44 @@ export default class Note extends Vue {
       .filter((a) => a.timestamp === this.$route.params.timestamp)[0];
   }
   public enterer(event) {
-    if (event) {
-      event.preventDefault();
-      const text = this.pomodoro.message;
-      const cIndex = event.target.selectionStart;
-      const startText = text.slice(0, event.target.selectionStart);
-      const endText = text.slice(event.target.selectionStart);
-      const nowLine = startText.split('\n').slice(-1)[0]
-      const isLi: any = nowLine.split(/\s/)[0].match(/-|\*/)
-      if (isLi) {
-        const msg = `${startText}\n  ${isLi.input} ${endText}`;
-        this.pomodoro.message = msg;
-        console.log(msg, event)
-      } else {
-        const msg = `${startText}\n${endText}`;
-        this.pomodoro.message = msg;
-        console.log(msg, event)
-      }
-      // Keep cursol position
-      event.target.setSelectionRange(cIndex + 1, cIndex + 1);
+    if (!event) {
+      return;
     }
+    const text = this.pomodoro.message;
+    const cIndex = event.target.selectionStart;
+    const startText = text.slice(0, cIndex);
+    const endText = text.slice(cIndex);
+
+    // computed completion word and new text
+    const nowLine = startText.split('\n').slice(-1)[0];
+    const isLi: any = nowLine.split(/\s/)[0].match(/-|\*/);
+    const completion = isLi ?
+      `\n${isLi.input} ` :
+      `\n`;
+    this.pomodoro.message = `${startText}${completion}${endText}`;
+
+    // Keep cursor position
+    event.target.value = this.pomodoro.message;
+    const newPosition = cIndex + completion.length;
+    event.target.setSelectionRange(newPosition, newPosition);
   }
   public tabber(event) {
-    if (event) {
-      event.preventDefault();
-      const cIndex = event.target.selectionStart;
-      const text = this.pomodoro.message;
-      const startText = text.slice(0, cIndex);
-      const endText = text.slice(cIndex);
-      this.pomodoro.message = `${startText}  ${endText}`;
-      // event.target.selectionEnd = event.target.selectionStart + 1;
-      // Keep cursol position
-      event.target.setSelectionRange(cIndex + 1, cIndex + 1);
+    if (!event) {
+      return;
     }
+    const text = this.pomodoro.message;
+    const cIndex = event.target.selectionStart;
+    const startText = text.slice(0, cIndex);
+    const endText = text.slice(cIndex);
 
+    // computed completion word and new text
+    const completion = '\t';
+    this.pomodoro.message = `${startText}${completion}${endText}`;
+
+    // Keep cursor position
+    event.target.value = this.pomodoro.message;
+    const newPosition = cIndex + completion.length;
+    event.target.setSelectionRange(newPosition, newPosition);
   }
   get height() {
     const autosizeHeight = (text, lineHeight) => {
@@ -96,7 +100,7 @@ export default class Note extends Vue {
     return autosizeHeight(
       this.pomodoro.message,
       this.lineHeight,
-    )
+    );
   }
   public input(e) {
     if (!e.target.composing) {
