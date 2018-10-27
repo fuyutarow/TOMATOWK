@@ -33,6 +33,14 @@
         </template>
       </v-flex>
     </v-layout>
+    <v-layout>
+      <v-flex d-flex xs4>
+        <TablePomodoro :pomodoros="pomodoroList" />
+      </v-flex>
+      <v-flex d-flex xs8>
+        <VueMarkdown :source="lastPomodoro.message" style='padding:50px' />
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 

@@ -7,12 +7,14 @@
       <v-list>
         {{ $store.state.pomodoroSeries }}
       </v-list>
+      <v-list>
+        {{ $store.state.pomodoroList }}
+      </v-list>
     </v-navigation-drawer>
     <Header />
     <v-content>
       <v-container fluid>
         <router-view></router-view>
-        <TablePomodoro :pomodoros="pomodoros" />
       </v-container>
     </v-content>
     <v-footer app></v-footer>
@@ -25,7 +27,6 @@ import {
   Component,
   Vue,
 } from 'vue-property-decorator';
-import TablePomodoro from '@/components/TablePomodoro.vue';
 import {
   Header,
 } from '@/views';
@@ -33,10 +34,10 @@ import {
   recordPath,
 } from '@/store';
 
+
 @Component({
   components: {
     Header,
-    TablePomodoro,
   },
 })
 export default class App extends Vue {

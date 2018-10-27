@@ -2,8 +2,8 @@
   <v-container>
     <v-layout>
       <v-flex>
-        <p>{{ datetime }}</p>
-        <v-textarea solo name="input-7-4" label="commit message" v-model:value="pomodoro.message"></v-textarea>
+        <p> {{ datetime }} </p>
+        <Editor v-model="pomodoro.message" />
       </v-flex>
     </v-layout row wrap>
   </v-container>
@@ -13,9 +13,16 @@
 import {
   Component,
   Vue,
+  Watch,
 } from 'vue-property-decorator';
+import Editor from '@/components/Editor/index.vue';
 
-@Component({})
+
+@Component({
+  components: {
+    Editor,
+  },
+})
 export default class Note extends Vue {
   get datetime() {
     const timestamp = this.$route.params.timestamp;
@@ -25,8 +32,11 @@ export default class Note extends Vue {
     return this.$store.state.pomodoroList.all
       .filter((a) => a.timestamp === this.$route.params.timestamp)[0];
   }
-  public updated() {
+
+  @Watch('pomodoro.message')
+  public save() {
     this.$store.dispatch('pomodoroList/dump');
+
   }
 }
 </script>
