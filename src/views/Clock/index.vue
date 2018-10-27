@@ -31,7 +31,14 @@
             <v-icon class="material-icons">create</v-icon>
           </v-btn>
         </template>
-        {{ policy }}
+      </v-flex>
+    </v-layout>
+    <v-layout>
+      <v-flex d-flex xs4>
+        <TablePomodoro :pomodoros="pomodoroList" />
+      </v-flex>
+      <v-flex d-flex xs8>
+        <div style="padding:50px;" v-html="compiledMarkdown"></div>
       </v-flex>
     </v-layout>
   </v-container>

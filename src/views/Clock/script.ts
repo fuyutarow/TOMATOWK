@@ -1,10 +1,12 @@
 import moment from 'moment';
+import marked from 'marked';
 import {
   Component,
   Vue,
   Watch,
 } from 'vue-property-decorator';
 import Timer from '@/components/Timer.vue';
+import TablePomodoro from '@/components/TablePomodoro.vue';
 
 
 const sleep = (sec) => new Promise((r) => setTimeout(r, sec * 1000));
@@ -14,6 +16,7 @@ const to60 = (n) => n < 0 ? 59 : n;
 @Component({
   components: {
     Timer,
+    TablePomodoro,
   },
 })
 export default class Home extends Vue {
@@ -27,6 +30,11 @@ export default class Home extends Vue {
   }
   get endPomodoro() {
     return this.pomodoroList.slice(-1)[0];
+  }
+  get compiledMarkdown() {
+    return marked(this.lastPomodoro.message, {
+      sanitize: true,
+    });
   }
   get timer() {
     return this.$store.state.timer;
