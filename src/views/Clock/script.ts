@@ -24,7 +24,9 @@ const to60 = (n) => n < 0 ? 59 : n;
 })
 export default class Home extends Vue {
   get pomodoroList() {
-    return this.$store.state.pomodoroList.all;
+    const yesterday = moment().subtract(1, 'days');
+    return this.$store.state.pomodoroList.all
+      .filter((p) =>  moment(p.timestamp).isAfter(yesterday));
   }
   get lastPomodoro() {
     return this.pomodoroList
