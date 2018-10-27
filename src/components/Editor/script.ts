@@ -38,9 +38,7 @@ export default class Editor extends Vue {
 
   public enterer(event) {
     if (!event) { return; }
-
-    // press Enter when IME edior
-    if (event.keyCode === 229) { return; }
+    if (event.keyCode === 229) { return; } // press Enter when IME edior
 
     const text = this.text;
     const cIndex = event.target.selectionStart;
@@ -65,9 +63,9 @@ export default class Editor extends Vue {
   }
 
   public tabber(event) {
-    if (!event) {
-      return;
-    }
+    if (!event) { return; }
+    if (event.keyCode === 229) { return; } // press Enter when IME edior
+
     const text = this.text;
     const cIndex = event.target.selectionStart;
     const startText = text.slice(0, cIndex);
