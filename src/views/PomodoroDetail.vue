@@ -50,6 +50,12 @@ export default class Note extends Vue {
     if (!event) {
       return;
     }
+
+    // press Enter when IME edior
+    if (event.keyCode === 229) {
+      return;
+    }
+
     const text = this.pomodoro.message;
     const cIndex = event.target.selectionStart;
     const startText = text.slice(0, cIndex);
