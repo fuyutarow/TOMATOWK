@@ -1,12 +1,20 @@
 <template>
-  <v-container style='padding:0'>
-    <v-layout>
-      <v-flex>
-        <p> {{ datetime }} </p>
-        <Editor v-model="pomodoro.message" />
-      </v-flex>
-    </v-layout row wrap>
-  </v-container>
+  <div>
+    <v-card color="transparent">
+      <v-container fluid grid-list-lg>
+        <v-layout row wrap>
+          <v-flex xs12>
+            <PomodoroCard :pomodoro="pomodoro" :setDone='false' />
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card>
+    <div style="text-align: center;">
+      <v-btn :to="{ name: 'vine' }" slot="activator" color="orange" small flat dark>
+        more
+      </v-btn>
+    </div>
+  </div>
 </template>
 
 <script lang='ts'>
@@ -15,12 +23,12 @@ import {
   Vue,
   Watch,
 } from 'vue-property-decorator';
-import Editor from '@/components/Editor/index.vue';
+import PomodoroCard from '@/components/PomodoroCard/index.vue';
 
 
 @Component({
   components: {
-    Editor,
+    PomodoroCard,
   },
 })
 export default class Note extends Vue {
@@ -31,12 +39,6 @@ export default class Note extends Vue {
   get pomodoro() {
     return this.$store.state.pomodoroList.all
       .filter((a) => a.timestamp === this.$route.params.timestamp)[0];
-  }
-
-  @Watch('pomodoro.message')
-  public save() {
-    this.$store.dispatch('pomodoroList/dump');
-
   }
 }
 </script>

@@ -4,7 +4,7 @@
       <v-layout row wrap>
         <template v-for="pomodoro in pomodoros">
           <v-flex xs12>
-            <VineItem :pomodoro="pomodoro" />
+            <PomodoroCard :pomodoro="pomodoro" />
           </v-flex>
         </template>
       </v-layout>
@@ -18,16 +18,16 @@ import {
   Component,
   Vue,
 } from 'vue-property-decorator';
+import PomodoroCard from '@/components/PomodoroCard/index.vue';
 import VueMarkdown from 'vue-markdown';
 import Editor from '@/components/Editor/index.vue';
-import VineItem from '@/components/VineItem.vue';
 
 
 @Component({
   components: {
+    PomodoroCard,
     VueMarkdown,
     Editor,
-    VineItem,
   },
 })
 export default class PomodoroList extends Vue {
