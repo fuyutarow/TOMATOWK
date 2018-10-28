@@ -15,7 +15,13 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn small flat color="orange">show</v-btn>
+        <v-tooltip top>
+          <v-btn slot="activator" color="orange" small flat dark>
+            show
+          </v-btn>
+          <span>ctrl+Enter</span>
+        </v-tooltip>
+
       </v-card-actions>
     </template>
   </v-card>
