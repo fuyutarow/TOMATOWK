@@ -24,7 +24,7 @@ export default class Editor extends Vue {
       'height': `${this.height + 100}px`,
       'width': `100%`,
       'line-height': `${this.lineHeight}px`,
-      'padding': '0',
+      'padding': '16px',
     };
   }
   get height() {
