@@ -12,7 +12,6 @@
   height: 100%;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #333;
-
 }
 
 textarea,
@@ -23,7 +22,6 @@ textarea,
   vertical-align: top;
   box-sizing: border-box;
   padding: 0;
-
 }
 
 textarea {
@@ -35,12 +33,9 @@ textarea {
   font-size: 14px;
   font-family: 'Monaco', courier, monospace;
   padding: 0;
-
 }
 
 code {
   color: #f66;
-
 }
-
 </style>

@@ -8,9 +8,8 @@ import marked from 'marked';
 const focus = {
   inserted(el) {
     el.focus();
-
-
-}};
+  },
+};
 
 @Component({
     directives: { focus },
