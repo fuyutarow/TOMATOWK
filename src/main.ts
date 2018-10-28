@@ -28,6 +28,12 @@ import 'vuetify/dist/vuetify.min.css'; // Ensure you are using css-loader
 Vue.use(Vuetify);
 
 
+// fro PrismJS
+import VuePrism from 'vue-prism';
+Vue.use(VuePrism);
+import '@/assets/css/prism.css';
+
+
 new Vue({
   router,
   store,

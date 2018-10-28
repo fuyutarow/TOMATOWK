@@ -1,12 +1,8 @@
 <template>
   <v-container align-center>
     <v-layout text-xs-center>
-      <v-flex xs12>
+      <div style="margin: auto; padding-top:30px; padding-bottom:40px">
         <Timer :color='color' :progress='progress' style="padding:10px" />
-      </v-flex>
-    </v-layout>
-    <v-layout text-xs-center>
-      <v-flex>
         <v-btn @click="stop" fab dark small>
           <i class="material-icons">stop</i>
         </v-btn>
@@ -33,7 +29,7 @@
             <v-icon class="material-icons">create</v-icon>
           </v-btn>
         </template>
-      </v-flex>
+      </div>
     </v-layout>
     <v-layout>
       <TablePomodoro :pomodoros="pomodoroList" />
