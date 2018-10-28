@@ -60,6 +60,16 @@ export default class App extends Vue {
     this.initPomodoroList();
   }
 
+  public mounted() {
+    const shell = require('electron').shell;
+    document.addEventListener('click', (event: any) => {
+      if (event.target.tagName === 'A' && event.target.href.startsWith('http')) {
+        event.preventDefault();
+        shell.openExternal(event.target.href);
+      }
+    });
+  }
+
   public initPomodoroList() {
     this.$store.dispatch('pomodoroList/load');
     if (this.lastPomodoro.color === 'red' && this.lastPomodoro.blank) {
