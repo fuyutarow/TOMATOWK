@@ -1,5 +1,5 @@
 <template>
-  <v-card class="elevation-2" xs7>
+  <v-card class="elevation-2" :style="cardStyle">
     <v-card-title style="padding-bottom:0">
       <Pomodot :color="pomodoro.color" />
       <span> {{datetime}} </span>
@@ -39,6 +39,15 @@ import Pomodot from '@/components/Pomodot.vue';
 import VueMarkdown from 'vue-markdown';
 import Editor from '@/components/Editor/index.vue';
 
+const colorMap = (color) => {
+  const m = {
+    red: '#E53935',
+    green: '#32B232',
+    yellow: '#ffd500',
+  };
+  return (color in m) ? m[color] : '##123456';
+};
+
 @Component({
   components: {
     Pomodot,
@@ -52,6 +61,12 @@ export default class PomodoroList extends Vue {
 
   get datetime() {
     return moment(this.pomodoro.timestamp).fromNow();
+  }
+
+  get cardStyle() {
+    return {
+      border: `solid thin ${colorMap(this.pomodoro.color)}`,
+    };
   }
 
   @Watch('pomodoro.message')
