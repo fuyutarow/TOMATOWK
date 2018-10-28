@@ -5,9 +5,7 @@
       <span> {{datetime}} </span>
     </v-card-title>
     <v-card-text>
-      <v-btn @click='click'>btn</v-btn>
-      {{ done}}
-      <VueMarkdown :source="pomodoro.message" v-show="done" />
+      <span @click='done=false'><VueMarkdown :source="pomodoro.message" v-show="done" /></span>
       <Editor v-model:value="pomodoro.message" @done='done=true' v-show="!done" />
     </v-card-text>
   </v-card>
@@ -19,6 +17,7 @@ import {
   Component,
   Vue,
   Prop,
+  Watch,
 } from 'vue-property-decorator';
 import Pomodot from '@/components/Pomodot.vue';
 import VueMarkdown from 'vue-markdown';
@@ -33,15 +32,15 @@ import Editor from '@/components/Editor/index.vue';
 })
 export default class PomodoroList extends Vue {
   @Prop() public pomodoro;
-  public onFocus = false;
+  public done = true;
 
-  get moment() {
-    return moment;
+  get datetime() {
+    return moment(this.pomodoro.timestamp).fromNow()
   }
 
-  click() {
-    this.onFocus = !this.onFocus
-    console.log('$$$$$$$$')
+  @Watch('pomodoro.message')
+  public save() {
+    this.$store.dispatch('pomodoroList/dump');
 
   }
 }
