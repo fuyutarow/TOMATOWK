@@ -1,19 +1,16 @@
 <template>
-  <v-timeline-item color="red darken-1" fill-dot left small>
-    <v-layout justify-space-between>
-      <v-flex>
-        <v-card class="elevation-2" xs7 @click.native:"click($event)">
-          <v-card-text>
-            <v-btn @click='click'>btn</v-btn>
-            <VueMarkdown :source="pomodoro.message" v-show="!onFocus" />
-            <Editor :value="pomodoro.message" v-show="onFocus" />
-          </v-card-text>
-        </v-card>
-      </v-flex>
-      <v-flex xs5 text-xs-right>{{moment(pomodoro.timestamp).fromNow()}}</v-flex>
-    </v-layout>
-  </v-timeline-item>
-
+  <v-card class="elevation-2" xs7 @click="click($event)">
+    <v-card-title>
+      <Pomodot :color="pomodoro.color" />
+      <span> {{datetime}} </span>
+    </v-card-title>
+    <v-card-text>
+      <v-btn @click='click'>btn</v-btn>
+      {{ done}}
+      <VueMarkdown :source="pomodoro.message" v-show="done" />
+      <Editor v-model:value="pomodoro.message" @done='done=true' v-show="!done" />
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang='ts'>
