@@ -3,8 +3,8 @@ import Router from 'vue-router';
 import {
   Clock,
   PomodoroList,
+  PomodoroVine,
   PomodoroDetail,
-  Note,
  } from './views';
 
 Vue.use(Router);
@@ -13,15 +13,16 @@ export default new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
+    { path: '/index.html', redirect: '/' },
     {
       path: '/',
       name: 'clock',
       component: Clock,
     },
     {
-      path: '/note',
-      name: 'note',
-      component: Note,
+      path: '/vine',
+      name: 'vine',
+      component: PomodoroVine,
     },
     {
       path: '/pomodoros',

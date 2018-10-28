@@ -5,10 +5,9 @@ import {
   Vue,
   Watch,
 } from 'vue-property-decorator';
-import VueMarkdown from 'vue-markdown';
 import Timer from '@/components/Timer.vue';
 import TablePomodoro from '@/components/TablePomodoro.vue';
-
+import VueMarkdown from 'vue-markdown';
 
 
 const sleep = (sec) => new Promise((r) => setTimeout(r, sec * 1000));
@@ -24,7 +23,9 @@ const to60 = (n) => n < 0 ? 59 : n;
 })
 export default class Home extends Vue {
   get pomodoroList() {
-    return this.$store.state.pomodoroList.all;
+    const yesterday = moment().subtract(1, 'days');
+    return this.$store.state.pomodoroList.all
+      .filter((p) =>  moment(p.timestamp).isAfter(yesterday));
   }
   get lastPomodoro() {
     return this.pomodoroList

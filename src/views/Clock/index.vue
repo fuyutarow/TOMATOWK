@@ -1,25 +1,27 @@
 <template>
-  <v-container>
-    <v-layout text-xs-center wrap>
+  <v-container align-center>
+    <v-layout text-xs-center>
       <v-flex xs12>
-        <Timer :color='color' :progress='progress' />
+        <Timer :color='color' :progress='progress' style="padding:10px" />
       </v-flex>
-      <v-flex mb-4>
-        <v-btn @click="stop" fab dark>
+    </v-layout>
+    <v-layout text-xs-center>
+      <v-flex>
+        <v-btn @click="stop" fab dark small>
           <i class="material-icons">stop</i>
         </v-btn>
         <template v-if="timer.inPause">
-          <v-btn @click="play" fab dark>
+          <v-btn @click="play" fab dark small>
             <i class="material-icons">play_arrow</i>
           </v-btn>
         </template>
         <template v-else>
-          <v-btn @click="pause" fab dark>
+          <v-btn @click="pause" fab dark small>
             <i class="material-icons">pause</i>
           </v-btn>
         </template>
         <template v-if="this.lastPomodoro">
-          <v-btn fab dark :to="{
+          <v-btn fab dark small :to="{
           name: 'pomodoroDetail',
           params: { timestamp: lastPomodoro.timestamp},
           }">
@@ -34,12 +36,7 @@
       </v-flex>
     </v-layout>
     <v-layout>
-      <v-flex d-flex xs4>
-        <TablePomodoro :pomodoros="pomodoroList" />
-      </v-flex>
-      <v-flex d-flex xs8>
-        <VueMarkdown :source="lastPomodoro.message" style='padding:50px' />
-      </v-flex>
+      <TablePomodoro :pomodoros="pomodoroList" />
     </v-layout>
   </v-container>
 </template>

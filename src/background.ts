@@ -20,19 +20,35 @@ let win;
 // Standard scheme must be registered before the app is ready
 protocol.registerStandardSchemes(['app'], { secure: true });
 function createWindow() {
-  // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600 });
-
   if (isDevelopment) {
+    win = new BrowserWindow({
+      width: 1200,
+      height: 1200,
+      resizable: true,
+      frame: true,
+    });
+
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string);
     if (!process.env.IS_TEST) {
       win.webContents.openDevTools();
     }
   } else {
+    win = new BrowserWindow({
+      width: 300,
+      height: 300,
+      minWidth: 300,
+      minHeight: 300,
+      resizable: true,
+      frame: true,
+    });
+
     createProtocol('app');
-    // Load the index.html when not in development
+
+    win.hide();
     win.loadFile('index.html');
+    win.webContents.on('did-finish-load', () => { win.show(); });
+
   }
 
   win.on('closed', () => {
@@ -60,7 +76,7 @@ app.on('activate', () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', async () => {
+app.on('ready', () => {
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     installVueDevtools();
@@ -96,6 +112,7 @@ app.on('ready', async () => {
         {role: 'zoomout'},
         {type: 'separator'},
         {role: 'togglefullscreen'},
+        {role: 'toggleDevTools'},
       ],
     },
     {
