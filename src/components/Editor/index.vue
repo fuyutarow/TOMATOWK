@@ -1,6 +1,6 @@
 <template>
   <div id="editor">
-    <textarea :value="text" :style="style" @input='_input' @keydown.tab.prevent="tabber" @keydown.enter.prevent="enterer"></textarea>
+    <textarea :value="text" :style="style" @input='_input' @keydown.tab.prevent="tabber" @keydown.enter.prevent="enterer" @focusout="$emit('done', true)" v-focus></textarea>
   </div>
 </template>
 
@@ -12,7 +12,6 @@
   height: 100%;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #333;
-
 }
 
 textarea,
@@ -22,8 +21,7 @@ textarea,
   height: 100%;
   vertical-align: top;
   box-sizing: border-box;
-  padding: 0 20px;
-
+  padding: 0;
 }
 
 textarea {
@@ -34,13 +32,10 @@ textarea {
   background-color: #f6f6f6;
   font-size: 14px;
   font-family: 'Monaco', courier, monospace;
-  padding: 20px;
-
+  padding: 0;
 }
 
 code {
   color: #f66;
-
 }
-
 </style>

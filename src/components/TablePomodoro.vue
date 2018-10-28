@@ -5,13 +5,18 @@
         <br />
       </template>
       <template v-else>
-        <Pomodot :color="pomodoro.color" :blank="pomodoro.blank" />
+
+        <v-tooltip top>
+          <Pomodot slot="activator" :color="pomodoro.color" :blank="pomodoro.blank" />
+          <span>{{ moment(pomodoro.timestamp).format('MM-DD HH:mm')}}</span>
+        </v-tooltip>
       </template>
     </template>
   </div>
 </template>
 
 <script lang='ts'>
+import moment from 'moment';
 import Pomodot from '@/components/Pomodot.vue';
 import {
   Component,
@@ -25,6 +30,9 @@ import {
   },
 })
 export default class TablePomodoro extends Vue {
-  @Prop() public pomodoros;
+  @Prop()
+  pomodoros;
+
+  public moment = moment;
 }
 </script>

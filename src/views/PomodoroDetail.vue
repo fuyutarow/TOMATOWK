@@ -1,11 +1,10 @@
 <template>
-  <v-container style='padding:0'>
-    <v-layout>
-      <v-flex>
-        <p> {{ datetime }} </p>
-        <Editor v-model="pomodoro.message" />
+  <v-container fluid grid-list-lg>
+    <v-layout row wrap>
+      <v-flex xs12>
+        <PomodoroCard :pomodoro="pomodoro" :setDone='false' />
       </v-flex>
-    </v-layout row wrap>
+    </v-layout>
   </v-container>
 </template>
 
@@ -15,12 +14,12 @@ import {
   Vue,
   Watch,
 } from 'vue-property-decorator';
-import Editor from '@/components/Editor/index.vue';
+import PomodoroCard from '@/components/PomodoroCard/index.vue';
 
 
 @Component({
   components: {
-    Editor,
+    PomodoroCard,
   },
 })
 export default class Note extends Vue {
@@ -31,12 +30,6 @@ export default class Note extends Vue {
   get pomodoro() {
     return this.$store.state.pomodoroList.all
       .filter((a) => a.timestamp === this.$route.params.timestamp)[0];
-  }
-
-  @Watch('pomodoro.message')
-  public save() {
-    this.$store.dispatch('pomodoroList/dump');
-
   }
 }
 </script>

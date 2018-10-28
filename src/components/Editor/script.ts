@@ -5,8 +5,15 @@ import {
 } from 'vue-property-decorator';
 import marked from 'marked';
 
+const focus = {
+  inserted(el) {
+    el.focus();
+  },
+};
 
-@Component
+@Component({
+    directives: { focus },
+})
 export default class Editor extends Vue {
   @Prop() public value;
   public text = '';
@@ -17,7 +24,7 @@ export default class Editor extends Vue {
       'height': `${this.height + 100}px`,
       'width': `100%`,
       'line-height': `${this.lineHeight}px`,
-      'padding': '20px',
+      'padding': '0',
     };
   }
   get height() {
@@ -39,6 +46,10 @@ export default class Editor extends Vue {
   public enterer(event) {
     if (!event) { return; }
     if (event.keyCode === 229) { return; } // press Enter when IME edior
+    if (event.ctrlKey || event.metaKey) {
+      this.$emit('done', true);
+      return;
+    }
 
     const text = this.text;
     const cIndex = event.target.selectionStart;

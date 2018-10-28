@@ -5,10 +5,9 @@ import {
   Vue,
   Watch,
 } from 'vue-property-decorator';
-import VueMarkdown from 'vue-markdown';
 import Timer from '@/components/Timer.vue';
 import TablePomodoro from '@/components/TablePomodoro.vue';
-
+import VueMarkdown from 'vue-markdown';
 
 
 const sleep = (sec) => new Promise((r) => setTimeout(r, sec * 1000));

@@ -11,6 +11,9 @@
       <v-btn :to="{ name: 'pomodoroList' }" small icon>
         <v-icon size=25>view_list</v-icon>
       </v-btn>
+      <v-btn :to="{ name: 'vine' }" small icon>
+        <img src="@/assets/git_branch_762954.png" width=25 height=25></img>
+      </v-btn>
       <!--
       <v-btn small icon>
         <v-avatar size=25>

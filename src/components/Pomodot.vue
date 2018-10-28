@@ -7,15 +7,24 @@ import {
   Vue,
   Prop,
 } from 'vue-property-decorator';
-@Component({})
+
+
+const colorMap = (color) => {
+  const m = {
+    red: '#E53935',
+    green: '#32B232',
+    yellow: '#ffd500',
+  };
+  return (color in m) ? m[color] : '##123456';
+};
+
+
+@Component
 export default class Pomodoro extends Vue {
   @Prop() public color;
   @Prop() public blank;
   get style() {
-    const colorCode =
-      (this.color === 'red') ? '#E53935' : // red darken-1
-      (this.color === 'green') ? '#32B232' :
-      (this.color === 'yellow') ? '#ffd500' : '#123456';
+    const colorCode = colorMap(this.color);
 
     const blank = (this.blank) ? this.blank : false;
     return (blank) ? `
