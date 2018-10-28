@@ -22,7 +22,7 @@ textarea,
   height: 100%;
   vertical-align: top;
   box-sizing: border-box;
-  padding: 0 20px;
+  padding: 0;
 
 }
 
@@ -34,7 +34,7 @@ textarea {
   background-color: #f6f6f6;
   font-size: 14px;
   font-family: 'Monaco', courier, monospace;
-  padding: 20px;
+  padding: 0;
 
 }
 

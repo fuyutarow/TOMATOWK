@@ -1,6 +1,6 @@
 <template>
-  <v-card class="elevation-2" xs7 @click="click($event)">
-    <v-card-title>
+  <v-card class="elevation-2" xs7>
+    <v-card-title style="padding-bottom:0">
       <Pomodot :color="pomodoro.color" />
       <span> {{datetime}} </span>
     </v-card-title>
@@ -35,7 +35,7 @@ export default class PomodoroList extends Vue {
   public done = true;
 
   get datetime() {
-    return moment(this.pomodoro.timestamp).fromNow()
+    return moment(this.pomodoro.timestamp).fromNow();
   }
 
   @Watch('pomodoro.message')

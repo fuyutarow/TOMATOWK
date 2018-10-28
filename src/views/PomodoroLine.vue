@@ -37,7 +37,7 @@ import VineItem from '@/components/VineItem.vue';
   components: {
     VueMarkdown,
     Editor,
-    VineItem
+    VineItem,
   },
 })
 export default class PomodoroList extends Vue {
