@@ -39,6 +39,11 @@ export default class Editor extends Vue {
   public enterer(event) {
     if (!event) { return; }
     if (event.keyCode === 229) { return; } // press Enter when IME edior
+    if (event.ctrlKey || event.metaKey) {
+      console.log('will emit done')
+      this.$emit('done', true);
+      return;
+    }
 
     const text = this.text;
     const cIndex = event.target.selectionStart;
