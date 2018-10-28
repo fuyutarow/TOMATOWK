@@ -32,3 +32,5 @@
 </template>
 
 <script lang='ts' src='./script' />
+
+<style src="@/assets/css/main.css" />
