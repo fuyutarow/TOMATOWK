@@ -28,20 +28,7 @@
       </v-timeline-item>
 
       <template v-for="pomodoro in pomodoros">
-        <v-timeline-item color="red darken-1" fill-dot left small>
-          <v-layout justify-space-between>
-            <v-flex>
-              <v-card class="elevation-2" xs12>
-                <v-card-text>
-                  <VueMarkdown :source="pomodoro.message" />
-                  <Editor v-model="pomodoro.message" />
-                </v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs5 text-xs-right>{{moment(pomodoro.timestamp).fromNow()}}</v-flex>
-          </v-layout>
-        </v-timeline-item>
-
+        <VineItem :pomodoro="pomodoro" />
       </template>
 
       <template v-for="pomodoro in pomodoros">
@@ -68,12 +55,14 @@ import {
 import Pomodot from '@/components/Pomodot.vue';
 import VueMarkdown from 'vue-markdown';
 import Editor from '@/components/Editor/index.vue';
+import VineItem from '@/components/VineItem.vue';
 
 @Component({
   components: {
     Pomodot,
     VueMarkdown,
     Editor,
+    VineItem
   },
 })
 export default class PomodoroList extends Vue {
