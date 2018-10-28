@@ -35,8 +35,8 @@ function createWindow() {
     }
   } else {
     win = new BrowserWindow({
-      width: 300,
-      height: 300,
+      width: 360,
+      height: 360,
       minWidth: 300,
       minHeight: 300,
       resizable: true,

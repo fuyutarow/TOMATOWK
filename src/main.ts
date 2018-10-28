@@ -29,8 +29,8 @@ Vue.use(Vuetify);
 
 
 // fro PrismJS
-import VuePrism from 'vue-prism'
-Vue.use(VuePrism)
+import VuePrism from 'vue-prism';
+Vue.use(VuePrism);
 import '@/assets/css/prism.css';
 
 
