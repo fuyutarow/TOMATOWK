@@ -2,7 +2,7 @@
   <v-container align-center>
     <v-layout text-xs-center>
       <div style="margin: auto; padding-top:30px; padding-bottom:40px">
-        <Timer :color='color' :progress='progress' style="padding:10px" />
+        <Timer :color='color' style="padding:10px" />
         <v-btn @click="stop" fab dark small>
           <i class="material-icons">stop</i>
         </v-btn>
@@ -15,18 +15,21 @@
           <v-btn @click="pause" fab dark small>
             <i class="material-icons">pause</i>
           </v-btn>
+          <v-btn @click="pause" fab dark small :to="'/'">
+            <i class="material-icons">create</i>
+          </v-btn>
         </template>
         <template v-if="this.lastPomodoro">
           <v-btn fab dark small :to="{
           name: 'pomodoroDetail',
           params: { timestamp: lastPomodoro.timestamp},
           }">
-            <v-icon class="material-icons">create</v-icon>
+            <i class="material-icons">create</i>
           </v-btn>
         </template>
         <template v-else>
           <v-btn fab dark disable>
-            <v-icon class="material-icons">create</v-icon>
+            <i class="material-icons">create</i>
           </v-btn>
         </template>
       </div>

@@ -6,7 +6,7 @@
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn :to="{ name: 'clock' }" small icon>
-        <v-icon size=25>av_timer</v-icon>
+        <i class="material-icons" size=25>av_timer</i>
       </v-btn>
       <v-btn :to="{ name: 'vine' }" small icon>
         <img src="@/assets/git_branch_762954.png" width=25 height=25></img>
