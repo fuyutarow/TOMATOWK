@@ -5,8 +5,16 @@ import {
 } from 'vue-property-decorator';
 import marked from 'marked';
 
+const focus = {
+  inserted(el) {
+    el.focus();
 
-@Component
+
+}};
+
+@Component({
+    directives: { focus },
+})
 export default class Editor extends Vue {
   @Prop() public value;
   public text = '';
