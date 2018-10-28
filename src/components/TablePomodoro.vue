@@ -31,7 +31,7 @@ import {
 })
 export default class TablePomodoro extends Vue {
   @Prop()
-  pomodoros;
+  public pomodoros;
 
   public moment = moment;
 }

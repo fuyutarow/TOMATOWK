@@ -5,7 +5,6 @@ import {
   PomodoroList,
   PomodoroVine,
   PomodoroDetail,
-  Note,
  } from './views';
 
 Vue.use(Router);
@@ -19,11 +18,6 @@ export default new Router({
       path: '/',
       name: 'clock',
       component: Clock,
-    },
-    {
-      path: '/note',
-      name: 'note',
-      component: Note,
     },
     {
       path: '/vine',
