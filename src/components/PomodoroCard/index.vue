@@ -5,7 +5,7 @@
       <span> {{datetime}} </span>
     </v-card-title>
     <template v-if='done'>
-      <v-card-text>
+      <v-card-text style="padding:16px">
         <span @click='done=false'><VueMarkdown :source="pomodoro.message" v-show="done" /></span>
       </v-card-text>
       <v-card-actions>
