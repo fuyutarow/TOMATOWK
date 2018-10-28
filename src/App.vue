@@ -82,3 +82,14 @@ export default class App extends Vue {
   }
 }
 </script>
+
+<style>
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+</style>
