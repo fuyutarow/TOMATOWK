@@ -10,7 +10,6 @@ import TablePomodoro from '@/components/TablePomodoro.vue';
 import VueMarkdown from 'vue-markdown';
 
 
-
 @Component({
   components: {
     Timer,
@@ -38,7 +37,6 @@ export default class Home extends Vue {
   get color() {
     return !this.$store.state.pomodoroSeries.takeRest ? 'green' : 'red';
   }
-
 
   public play() {
     this.$store.dispatch('timer/play');

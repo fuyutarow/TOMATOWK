@@ -15,9 +15,6 @@
           <v-btn @click="pause" fab dark small>
             <i class="material-icons">pause</i>
           </v-btn>
-          <v-btn @click="pause" fab dark small :to="'/'">
-            <i class="material-icons">create</i>
-          </v-btn>
         </template>
         <template v-if="this.lastPomodoro">
           <v-btn fab dark small :to="{
