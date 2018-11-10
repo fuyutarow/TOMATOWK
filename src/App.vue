@@ -1,15 +1,6 @@
 <template>
   <v-app>
     <v-navigation-drawer app>
-      <v-list>
-        {{ $store.state.config}}
-      </v-list>
-      <v-list>
-        {{ $store.state.pomodoroSeries }}
-      </v-list>
-      <v-list>
-        {{ $store.state.pomodoroList }}
-      </v-list>
     </v-navigation-drawer>
     <Header />
     <v-content>
@@ -101,7 +92,7 @@ export default class App extends Vue {
   }
 
   get progress() {
-    const moment = require('moment')
+    const moment = require('moment');
 
     const timer = this.$store.state.timer;
     const config = this.$store.state.pomodoroSeries.config;
