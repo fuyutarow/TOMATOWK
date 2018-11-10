@@ -21,9 +21,6 @@ import {
 import {
   Header,
 } from '@/views';
-import {
-  recordPath,
-} from '@/store';
 
 
 @Component({
@@ -32,12 +29,6 @@ import {
   },
 })
 export default class App extends Vue {
-  get fpath() {
-    return recordPath;
-  }
-  get recordPath() {
-    return './record.json';
-  }
   get pomodoros() {
     return this.$store.state.pomodoroList.all;
   }
@@ -139,9 +130,6 @@ export default class App extends Vue {
       this.policy === 'focus' ? 'Focus' :
       this.policy === 'takeShortRest' ? 'Take short rest' :
       'Take long rest';
-    new(window as any).Notification('timeup', {
-      body: msg,
-    });
 
     if (this.endPomodoro.color === 'white') {
       this.$store.dispatch('pomodoroList/popWhite');
