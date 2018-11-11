@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import timer from './modules/timer';
 import pomodoroList from './modules/pomodoroList';
 import pomodoroSeries from './modules/pomodoroSeries';
+import loginUser from './modules/loginUser';
 
 Vue.use(Vuex);
 
@@ -14,10 +15,6 @@ export default new Vuex.Store({
     timer,
     pomodoroList,
     pomodoroSeries,
+    loginUser,
   },
-  state: {
-    currentUser: null,
-  },
-  mutations: {},
-  actions: {},
 });

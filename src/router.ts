@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import {
   Clock,
+  Signin,
   PomodoroList,
   PomodoroVine,
   PomodoroDetail,
@@ -14,6 +15,11 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     { path: '/index.html', redirect: '/' },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: Signin,
+    },
     {
       path: '/',
       name: 'clock',
