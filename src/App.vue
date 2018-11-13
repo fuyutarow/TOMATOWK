@@ -8,6 +8,8 @@
         <router-view></router-view>
       </v-container>
     </v-content>
+    <BottomNav />
+
   </v-app>
 </template>
 
@@ -20,12 +22,14 @@ import {
 } from 'vue-property-decorator';
 import {
   Header,
+  BottomNav,
 } from '@/views';
 
 
 @Component({
   components: {
     Header,
+    BottomNav,
   },
 })
 export default class App extends Vue {

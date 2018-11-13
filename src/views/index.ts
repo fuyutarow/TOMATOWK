@@ -1,4 +1,5 @@
 import Header from './Header.vue';
+import BottomNav from './BottomNav.vue';
 import Signin from './Signin/index.vue';
 import Clock from './Clock/index.vue';
 import PomodoroList from './PomodoroList.vue';
@@ -7,6 +8,7 @@ import PomodoroDetail from './PomodoroDetail.vue';
 
 export {
   Header,
+  BottomNav,
   Signin,
   Clock,
   PomodoroList,
