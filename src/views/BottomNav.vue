@@ -1,5 +1,5 @@
 <template>
-  <v-bottom-nav :active.sync="bottomNav" :value="true" absolute color="transparent">
+  <v-bottom-nav :active.sync="bottomNav" :value="true" fixed color="transparent">
     <v-btn :to="{ name: 'clock' }" small icon>
       <span>Timer</span>
       <v-icon>av_timer</v-icon>
