@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import {
   Clock,
   Signin,
+  UserDetail,
   PomodoroList,
   PomodoroVine,
   PomodoroDetail,
@@ -19,6 +20,11 @@ export default new Router({
       path: '/signin',
       name: 'signin',
       component: Signin,
+    },
+    {
+      path: '/users/:user_id',
+      name: 'userDetail',
+      component: UserDetail,
     },
     {
       path: '/',

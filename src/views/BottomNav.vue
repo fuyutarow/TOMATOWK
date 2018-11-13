@@ -8,12 +8,13 @@
       <span>Project</span>
       <img src="@/assets/git_branch_762954.png" width=25 height=25></img>
     </v-btn>
-    <v-btn :to="{ name: 'profile'}" small icon>
+    <v-btn :to="{ name: 'userDetail', params: { user_id: user.id }}" small icon>
       <span>Profile</span>
       <v-icon>person</v-icon>
     </v-btn>
   </v-bottom-nav>
 </template>
+
 
 <script lang='ts'>
 import {
@@ -21,6 +22,11 @@ import {
   Vue,
 } from 'vue-property-decorator';
 
+
 @Component
-export default class BottomNav extends Vue {}
+export default class BottomNav extends Vue {
+  get user() {
+    return this.$store.state.loginUser.status;
+  }
+}
 </script>
