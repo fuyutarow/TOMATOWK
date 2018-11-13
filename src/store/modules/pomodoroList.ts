@@ -2,12 +2,24 @@ import moment from 'moment';
 import Vue from 'vue';
 import {Module} from 'vuex';
 
+const welcomeMessage =`
+:tomato: TOMATOWK :rocket:
+===
+
+Welcom TOMATOWK!
+
+### Why
+
+### Features
+- fast
+- All platform is supported.
+`
 
 const state =  {
   all: [{
     timestamp: 0,
-    message: '',
-    color: 'white',
+    message: welcomeMessage,
+    color: 'red',
   }],
 };
 
