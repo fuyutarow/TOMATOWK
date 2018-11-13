@@ -8,10 +8,18 @@
       <span>Project</span>
       <img src="@/assets/git_branch_762954.png" width=25 height=25></img>
     </v-btn>
-    <v-btn :to="{ name: 'userDetail', params: { user_id: user.id }}" small icon>
-      <span>Profile</span>
-      <v-icon>person</v-icon>
-    </v-btn>
+    <template v-if='user.id'>
+      <v-btn :to="{ name: 'userDetail', params: { user_id: user.id }}" small icon>
+        <span>Profile</span>
+        <v-icon>person</v-icon>
+      </v-btn>
+    </template>
+    <template v-else>
+      <v-btn :to="{ name: 'signin'}" small icon>
+        <span>Profile</span>
+        <v-icon>person</v-icon>
+      </v-btn>
+    </template>
   </v-bottom-nav>
 </template>
 

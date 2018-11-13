@@ -2,7 +2,7 @@ import moment from 'moment';
 import Vue from 'vue';
 import {Module} from 'vuex';
 
-const welcomeMessage =`
+const welcomeMessage = `
 :tomato: TOMATOWK :rocket:
 ===
 
@@ -13,7 +13,7 @@ Welcom TOMATOWK!
 ### Features
 - fast
 - All platform is supported.
-`
+`;
 
 const state =  {
   all: [{
