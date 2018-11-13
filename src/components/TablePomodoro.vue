@@ -1,11 +1,10 @@
 <template>
-  <div style="padding:50px;flex-flow: row wrap;">
+  <div style="flex-flow: row wrap;">
     <template v-for="pomodoro in pomodoros">
       <template v-if="pomodoro.color==='white'">
         <br />
       </template>
       <template v-else>
-
         <v-tooltip top>
           <Pomodot slot="activator" :color="pomodoro.color" :blank="pomodoro.blank" />
           <span>{{ moment(pomodoro.timestamp).format('MM-DD HH:mm')}}</span>

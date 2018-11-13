@@ -3,13 +3,15 @@
     <v-navigation-drawer app>
     </v-navigation-drawer>
     <Header />
-    <v-content>
-      <v-container fluid style="padding:0">
-        <router-view></router-view>
+    <v-content :style="contentStyle" class="scroll-y" id="scroll-target">
+      <v-container v-scroll:#scroll-target="onScroll" style="padding:0;">
+        <router-view />
       </v-container>
     </v-content>
+    <BottomNav />
   </v-app>
 </template>
+
 
 <script lang='ts'>
 import firebase from 'firebase';
@@ -20,24 +22,33 @@ import {
 } from 'vue-property-decorator';
 import {
   Header,
+  BottomNav,
 } from '@/views';
-import {
-  recordPath,
-} from '@/store';
 
 
 @Component({
   components: {
     Header,
+    BottomNav,
   },
 })
 export default class App extends Vue {
-  get fpath() {
-    return recordPath;
+  public offsetTop = 0;
+
+
+  get contentStyle() {
+    const headerHeight = 35;
+    const bottomNavHeight = 56;
+    const contentHeight = window.parent.screen.height - headerHeight - bottomNavHeight;
+    return {
+      'max-height': `${contentHeight}px`,
+    };
   }
-  get recordPath() {
-    return './record.json';
+
+  public onScroll(e) {
+    this.offsetTop = e.target.scrollTop;
   }
+
   get pomodoros() {
     return this.$store.state.pomodoroList.all;
   }
@@ -139,9 +150,6 @@ export default class App extends Vue {
       this.policy === 'focus' ? 'Focus' :
       this.policy === 'takeShortRest' ? 'Take short rest' :
       'Take long rest';
-    new(window as any).Notification('timeup', {
-      body: msg,
-    });
 
     if (this.endPomodoro.color === 'white') {
       this.$store.dispatch('pomodoroList/popWhite');

@@ -1,17 +1,25 @@
 import moment from 'moment';
 import Vue from 'vue';
 import {Module} from 'vuex';
-import { remote } from 'electron';
-const fs = remote.require('fs');
 
-import { recordPath } from '@/store';
+const welcomeMessage = `
+:tomato: TOMATOWK :rocket:
+===
 
+Welcom TOMATOWK!
+
+### Why
+
+### Features
+- fast
+- All platform is supported.
+`;
 
 const state =  {
   all: [{
     timestamp: 0,
-    message: '',
-    color: 'white',
+    message: welcomeMessage,
+    color: 'red',
   }],
 };
 
@@ -67,18 +75,8 @@ const mutations = {
     _state.all.push(renew);
   },
   dump(_state) {
-    const json = JSON.stringify({
-      table: _state.all,
-    }, null, 4);
-    fs.writeFile(recordPath, json, 'utf8', (error) => {});
   },
   load(_state) {
-    if (!fs.existsSync(recordPath)) { return; }
-    const json = JSON.parse(fs.readFileSync(recordPath, 'utf-8'));
-    const pomodoros = json.table;
-    if (pomodoros) {
-      _state.all = pomodoros;
-    }
   },
 };
 

@@ -1,8 +1,6 @@
 <template>
   <v-toolbar app flat height=35>
-    <!--
     <v-toolbar-side-icon small></v-toolbar-side-icon>
-    -->
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn :to="{ name: 'clock' }" small icon>
@@ -11,22 +9,26 @@
       <v-btn :to="{ name: 'vine' }" small icon>
         <img src="@/assets/git_branch_762954.png" width=25 height=25></img>
       </v-btn>
-      <!--
-      <v-btn small icon>
-        <v-avatar size=25>
-          <template v-if="user">
-            <img :src="user.photoURL"></img>
-          </template>
-          <template v-else>
-            <img @click='_signin'
-              src="https://cdn4.iconfinder.com/data/icons/new-google-logo-2015/400/new-google-favicon-512.png"/>
-          </template>
-        </v-avatar>
-      </v-btn>
-      -->
+      <template v-if='user.id'>
+        <v-btn @click='signout' small icon>
+          <v-avatar size=25>
+            <img :src="user.photo"></img>
+          </v-avatar>
+        </v-btn>
+      </template>
+      <template v-else>
+        <v-btn :to="{ name: 'signin'}" small icon>
+          <i class="material-icons" size=25>person</i>
+        </v-btn>
+      </template>
     </v-toolbar-items>
+    <v-snackbar v-model="notice" timeout=1000 top="true" :vertical="true">
+      logout
+      <v-btn color="pink" flat @click="snackbar = false"> Close </v-btn>
+    </v-snackbar>
   </v-toolbar>
 </template>
+
 
 <script lang='ts'>
 import firebase from 'firebase';
@@ -37,32 +39,19 @@ import {
 
 @Component
 export default class Header extends Vue {
-  // get user() {
-  //   return this.$store.state.currentUser;
-  // }
+  public notice = false;
 
-  // public async created() {
-  //   const user = await firebase.auth().getRedirectResult().then((result) => result.user);
-  //   this.$store.state.currentUser! = user;
-  // }
+  get user() {
+    return this.$store.state.loginUser.status;
+  }
 
-  // private async _signin() {
-  //   // firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE);
-  //   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+  public async signout() {
+    this.$store.dispatch('loginUser/signout');
+    this.notice = true;
+    this.$router.push({
+      name: 'signin',
+    });
+  }
 
-  //   const google = new firebase.auth.GoogleAuthProvider();
-  //   return await firebase
-  //     .auth()
-  //     .signInWithRedirect(google)
-  //     .then((result: any) => {
-  //       this.$store.state.currentUser! = result.user;
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       const email = error.email;
-  //       const credential = error.credential;
-  //     });
-  // }
 }
 </script>
