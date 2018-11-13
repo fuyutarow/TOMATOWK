@@ -35,6 +35,7 @@ import {
 export default class App extends Vue {
   public offsetTop = 0;
 
+
   get contentStyle() {
     const headerHeight = 35;
     const bottomNavHeight = 56;
