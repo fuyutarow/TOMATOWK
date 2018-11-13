@@ -5,13 +5,13 @@
     <Header />
     <v-content :style="contentStyle" class="scroll-y" id="scroll-target">
       <v-container v-scroll:#scroll-target="onScroll" style="padding:0;">
-        {{ show }}
         <router-view />
       </v-container>
     </v-content>
     <BottomNav />
   </v-app>
 </template>
+
 
 <script lang='ts'>
 import firebase from 'firebase';
@@ -34,25 +34,16 @@ import {
 })
 export default class App extends Vue {
   public offsetTop = 0;
-  get show() {
-    const headerHeight = 35;
-    const bottomNavHeight = 56;
-    const contentHeight = window.parent.screen.height - headerHeight - bottomNavHeight;
-    return {
-      h: window.parent.screen.height,
-      c: contentHeight,
-    };
-  }
-  get contentStyle() {
 
+  get contentStyle() {
     const headerHeight = 35;
     const bottomNavHeight = 56;
     const contentHeight = window.parent.screen.height - headerHeight - bottomNavHeight;
     return {
       'max-height': `${contentHeight}px`,
     };
-
   }
+
   public onScroll(e) {
     this.offsetTop = e.target.scrollTop;
   }
